@@ -3,6 +3,17 @@ interface Command
   void execute(Agent actor);
 }
 
+class PickupCommand implements Command
+{
+  void execute(Agent actor) {
+    PVector dir = actor.getFacingDirection();
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE) {
+      actor.inventory = TileType.STONE;
+      world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
+    }
+  }
+}
+
 abstract class WalkCommand implements Command
 {
   void execute(Agent actor) {
@@ -14,7 +25,7 @@ abstract class WalkCommand implements Command
   }  
   
   void resolveCollision(Agent actor) {
-    if (world[actor.xPos][actor.yPos] == TileType.RIVER) rollBackPosition(actor);
+    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] == TileType.RIVER) rollBackPosition(actor);
   }
   
   abstract boolean checkIfFacing(Agent actor);

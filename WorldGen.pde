@@ -1,3 +1,8 @@
+boolean inBounds(int x, int y)
+{
+  return !(x < 0 || y < 0 || x >= gridSizeX || y >= gridSizeY);
+}
+
 TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers){
   
   TileType[][] res = new TileType[tiles_wide][tiles_high];
