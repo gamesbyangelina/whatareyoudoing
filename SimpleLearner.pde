@@ -23,10 +23,12 @@ List<Rule> simpleLearn (List<Event> events) {
         println ("Adding precondition " + Condition.values()[j]);
         //enoughSupport = true;
       }
-      if (rule.preconditions.size () > 0) {
-        rules.add (rule);
-      }
     }
+    if (rule.preconditions.size () > 0) {
+      println ("Adding rule!");
+        rules.add (rule);
+    }
+    else println ("Discarding rule");
   }
   return rules;
 }
