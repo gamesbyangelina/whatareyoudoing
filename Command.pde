@@ -7,9 +7,25 @@ class PickupCommand implements Command
 {
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
-    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE) {
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
+            && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE  //the tile is a stone
+            && actor.inventory == null) //the actor isn't already holding something
+    {
       actor.inventory = TileType.STONE;
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
+    }
+  }
+}
+
+class DropCommand implements Command
+{
+  void execute(Agent actor) {
+    PVector dir = actor.getFacingDirection();
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
+            && actor.inventory == TileType.STONE) //the actor is holding a stone
+    {
+      actor.inventory = null;
+      world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
     }
   }
 }
