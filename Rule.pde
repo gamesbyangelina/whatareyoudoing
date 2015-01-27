@@ -2,7 +2,7 @@ import java.util.*;
 
 class Rule {
 
-  List<Condition> preConditions = new ArrayList<Condition>();
+  List<Condition> preconditions = new ArrayList<Condition>();
   Action consequence;
   
   public String toString () {

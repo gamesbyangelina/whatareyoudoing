@@ -15,15 +15,16 @@ List<Rule> simpleLearn (List<Event> events) {
   for (int i = 0; i < numberOfActions; i++) {
     // has this action been taken enough with some sort of precondition?
     Rule rule = new Rule ();
-    
+    rule.consequence = Action.values()[i];
     for (int j = 0; j < numberOfConditions; j++) {
       if (occurrences[i][j] >= minimumSupport) {
-        
+        rule.preconditions.add (Condition.values()[j]);
         //enoughSupport = true;
       }
-
+      if (rule.preconditions.size () > 0) {
+        rules.add (rule);
+      }
     }
-    
   }
   return rules;
 }
