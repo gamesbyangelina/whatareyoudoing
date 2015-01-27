@@ -16,5 +16,10 @@ class Event {
   public void addAction(Action action){
     this.action = action;
   }
+  
+  public boolean containsPrecondition(Condition precondition){
+    return preconditions.contains(precondition);
+  }
+    
 }
 
