@@ -10,9 +10,6 @@ color stoneColor = color(198, 192, 192);
 
 color ERROR_COLOR = color(252, 10, 252); 
 
-
-
-
 void setup()
 {
   size(gridSizeX*tileSize, gridSizeY*tileSize);
@@ -23,6 +20,9 @@ void setup()
       world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
     }
   }
+  
+  //Generate a world (last parameter = number of rivers)
+  world = GenerateWorld(gridSizeX, gridSizeY, 3);
 }
 
 
