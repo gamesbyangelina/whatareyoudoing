@@ -10,7 +10,7 @@ color stoneColor = color(198, 192, 192);
 
 color ERROR_COLOR = color(252, 10, 252); 
 
-
+Parent parent;
 
 
 void setup()
@@ -23,6 +23,10 @@ void setup()
       world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
     }
   }
+  
+  parent = new Parent();
+  
+  smooth();
 }
 
 
@@ -46,7 +50,17 @@ void draw()
       popMatrix();  
     }
   }
-  noStroke();
-  
-  noLoop();
+  parent.render();
+}
+
+WalkLeftCommand walkLeft = new WalkLeftCommand();
+WalkRightCommand walkRight = new WalkRightCommand();
+WalkUpCommand walkUp = new WalkUpCommand();
+WalkDownCommand walkDown = new WalkDownCommand();
+void keyPressed()
+{
+  if (keyCode == LEFT) walkLeft.execute(parent);
+  else if (keyCode == RIGHT) walkRight.execute(parent);
+  else if (keyCode == UP) walkUp.execute(parent);
+  else if (keyCode == DOWN) walkDown.execute(parent);
 }
