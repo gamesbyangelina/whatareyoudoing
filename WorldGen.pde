@@ -1,3 +1,24 @@
+boolean inBounds(int x, int y)
+{
+  return !(x < 0 || y < 0 || x >= gridSizeX || y >= gridSizeY);
+}
+
+String[] barks = new String[]{
+  "Ooh, is it the seventh day already? Resting...",
+  "Reticulating river splines...",
+  "Redirecting salmon upstream...",
+  "Asking SpeedRock for 3000 boulder models...",
+  "Applying lichen...",
+  "Applying moss...",
+  "Removing moss from rolling stones...",
+  "Reconsidering initial act of creation...",
+  "Linking ELONMUSK.DLL... Loading...",
+  "Reconsidering chemical composition of water...",
+  "Adding in more emotions...",
+  "Decreeing arbitrary laws...",
+  "Killing all gamers...",
+};
+
 TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers){
   
   TileType[][] res = new TileType[tiles_wide][tiles_high];
@@ -11,6 +32,14 @@ TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers){
          //We multiply by this extra factor to try and encourage a downward gradient
          heightmap[i][j] = noise(i, j) * ((tiles_high+1-j+1)/(tiles_high*0.6));
          res[i][j] = null;
+         
+         if(heightmap[i][j] > 0.6 && random(1) < 0.05){
+            res[i][j] = TileType.STONE; 
+         }
+         
+         if(random(1) < 0.008){
+            print(barks[(int)random(barks.length)]+"\n"); 
+         }
      }
   } 
   
