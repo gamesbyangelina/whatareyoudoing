@@ -1,2 +1,7 @@
-# whatdidyoudo
+# What Did You Do?
+
 Another hot game prototype, jammed out during the Dagstuhl AI and Games seminar 2015
+
+# About The Game
+
+In *What Did You Do?* you play a creature trying to safely escort its children across the countryside. Your children are curious - they learn from you and the world around them, even when you wish they really wouldn't. Can you teach your children to live safely, while still overcoming all the obstacles in your way? Maybe a little help from some mind-altering food will help them remember the right lessons and forget the wrong ones...
