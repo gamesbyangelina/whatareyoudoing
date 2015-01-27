@@ -24,6 +24,8 @@ void setup()
     }
   }
   
+  world = GenerateWorld(gridSizeX, gridSizeY, 3);
+  
   parent = new Parent();
   
   smooth();
