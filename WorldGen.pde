@@ -18,6 +18,7 @@ String[] barks = new String[]{
   "Decreeing arbitrary laws...",
   "Killing all gamers...",
   "Picking up and putting down stones...",
+  "Cancelling classes...",
 };
 
 TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers){
