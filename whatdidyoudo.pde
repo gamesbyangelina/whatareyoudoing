@@ -27,7 +27,12 @@ void setup()
   
   world = GenerateWorld(gridSizeX, gridSizeY, 3);
   
-  parent = new Parent();
+  int xPos, yPos;
+  do {
+    xPos = int(random(0, gridSizeX));
+    yPos = int(random(0, gridSizeY));
+  } while (world[xPos][yPos] != null);
+  parent = new Parent(xPos, yPos);
   
   smooth();
 }
