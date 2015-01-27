@@ -1,6 +1,6 @@
 # What Are You Doing?
 
-Another hot game prototype, jammed out during the Dagstuhl AI and Games seminar 2015
+Another hot game prototype, jammed out during the Dagstuhl AI and Games seminar 2015.
 
 # About The Game
 
