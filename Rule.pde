@@ -5,13 +5,14 @@ class Rule {
   List<Condition> preConditions = new ArrayList<Condition>();
   Action consequence;
   
-  public void toString () {
+  public String toString () {
     StringBuffer sb = new StringBuffer ();
     for (Condition condition : preConditions) {
-      sb.add (condition.toString () + " ");
+      sb.append (condition.toString () + " ");
     }
-    sb.add ("->");
-    sb.add (consequence.toString);
+    sb.append ("->");
+    sb.append (consequence.toString ());
+    return sb.toString ();
   }
   
 }
