@@ -42,6 +42,7 @@ abstract class WalkCommand implements Command
   
   void resolveCollision(Agent actor) {
     if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] == TileType.RIVER) rollBackPosition(actor);
+    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) rollBackPosition(actor);
   }
   
   abstract boolean checkIfFacing(Agent actor);
