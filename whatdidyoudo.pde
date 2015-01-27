@@ -45,6 +45,9 @@ void draw()
       if (world[i][j] == TileType.RIVER) {
         fill(riverColor);
       }
+      else if (world[i][j] == TileType.STONE) {
+        fill(stoneColor);
+      }
       else {
         fill(groundColor);
       }
