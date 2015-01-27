@@ -7,7 +7,7 @@ List<Rule> simpleLearn (List<Event> events) {
   // count number of occurences of conditions  
   for (Event event : events) {
     for (Condition condition : event.preconditions) {
-      occurrences[condition.ordinal()][event.action.ordinal()]++;
+      occurrences[event.action.ordinal()][condition.ordinal()]++;
     }
   }
   // then, create a rule for each action
