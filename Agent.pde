@@ -1,6 +1,6 @@
 class Agent
 {
-  int xPos, yPos;
+  public int xPos, yPos;
   
   public Agent() {
     xPos = int(random(0, gridSizeX));
