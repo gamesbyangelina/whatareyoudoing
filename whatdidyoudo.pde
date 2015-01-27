@@ -10,6 +10,9 @@ color stoneColor = color(198, 192, 192);
 
 color ERROR_COLOR = color(252, 10, 252); 
 
+Parent parent;
+
+
 void setup()
 {
   size(gridSizeX*tileSize, gridSizeY*tileSize);
@@ -21,8 +24,9 @@ void setup()
     }
   }
   
-  //Generate a world (last parameter = number of rivers)
-  world = GenerateWorld(gridSizeX, gridSizeY, 3);
+  parent = new Parent();
+  
+  smooth();
 }
 
 
@@ -46,7 +50,17 @@ void draw()
       popMatrix();  
     }
   }
-  noStroke();
-  
-  noLoop();
+  parent.render();
+}
+
+WalkLeftCommand walkLeft = new WalkLeftCommand();
+WalkRightCommand walkRight = new WalkRightCommand();
+WalkUpCommand walkUp = new WalkUpCommand();
+WalkDownCommand walkDown = new WalkDownCommand();
+void keyPressed()
+{
+  if (keyCode == LEFT) walkLeft.execute(parent);
+  else if (keyCode == RIGHT) walkRight.execute(parent);
+  else if (keyCode == UP) walkUp.execute(parent);
+  else if (keyCode == DOWN) walkDown.execute(parent);
 }
