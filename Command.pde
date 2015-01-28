@@ -1,6 +1,7 @@
-interface Command
+abstract class Command
 {
-  void execute(Agent actor);
+  abstract void execute(Agent actor);
+  abstract Action getKind();
 }
 
 class PickupCommand implements Command
@@ -15,6 +16,8 @@ class PickupCommand implements Command
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
     }
   }
+  
+  Action getKind() { return Action.pickup; };
 }
 
 class DropCommand implements Command
@@ -28,6 +31,8 @@ class DropCommand implements Command
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
     }
   }
+  
+  Action getKind() { return Action.drop; }
 }
 
 abstract class WalkCommand implements Command
@@ -59,6 +64,7 @@ class WalkLeftCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos -= 1; }
   void rollBackPosition(Agent actor) { actor.xPos += 1; } 
+  Action getKind() { return Action.m_left; }
 }
 
 class WalkRightCommand extends WalkCommand
@@ -71,6 +77,7 @@ class WalkRightCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos += 1; }
   void rollBackPosition(Agent actor) { actor.xPos -= 1; }
+  Action getKind() { return Action.m_right; }
 }
 
 class WalkUpCommand extends WalkCommand
@@ -83,6 +90,7 @@ class WalkUpCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos -= 1; }
   void rollBackPosition(Agent actor) { actor.yPos += 1; }
+  Action getKind() { return Action.m_up; }
 }
 
 class WalkDownCommand extends WalkCommand
@@ -95,4 +103,5 @@ class WalkDownCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos += 1; }
   void rollBackPosition(Agent actor) { actor.yPos -= 1; }
+  Action getKind() { return Action.m_down; }
 }
