@@ -1,8 +1,3 @@
-boolean inBounds(int x, int y)
-{
-  return !(x < 0 || y < 0 || x >= gridSizeX || y >= gridSizeY);
-}
-
 String[] barks = new String[]{
   "Ooh, is it the seventh day already? Resting...",
   "Reticulating river splines...",

@@ -17,7 +17,7 @@ abstract class Agent
     noStroke();
     fill(renderColor);
     rect(xPos*tileSize + borderSize*2, yPos*tileSize + borderSize*2, 
-          tileSize - borderSize*6, tileSize - borderSize*6);
+          tileSize - borderSize*4, tileSize - borderSize*4);
     fill(255);
     if (direction == Facing.UP) 
       ellipse(xPos*tileSize + tileSize/2, yPos*tileSize + borderSize*4, 2, 2);
@@ -48,9 +48,33 @@ class Parent extends Agent
 
 class Child extends Agent
 {
+  private LinkedList<Command> commandQueue;
+  
   public Child(int x, int y)
   {
     super(x, y);
     renderColor = color(141, 115, 232);
+    commandQueue = new LinkedList<Command>();
+  }
+  
+  public void addCommandToQueue(Command c)
+  {
+    commandQueue.add(c);
+  }
+  
+  public void addAllCommandsToQueue(ArrayList<Command> c)
+  {
+    commandQueue.addAll(c);
+  }
+  
+  public void executeNextCommand()
+  {
+    Action a = commandQueue.remove().perform(this);
+    println("child just: " + a);
+  }
+  
+  public boolean hasCommandsInQueue()
+  {
+    return commandQueue.size() > 0;
   }
 }

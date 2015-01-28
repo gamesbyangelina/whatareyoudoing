@@ -5,6 +5,10 @@ enum Action {
   m_right,
   m_down,
   m_left,
+  f_up,
+  f_right,
+  f_down,
+  f_left,
   pickup,
   drop,
   eat;
