@@ -166,7 +166,7 @@ class Child extends Agent
   
   public void removeRuleFromMemory(Rule r) 
   {
-    rules.add(r);
+    rules.remove(r);
   }
   
   public List<Rule> gitRules() {

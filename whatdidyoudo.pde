@@ -35,6 +35,8 @@ AudioPlayer sfx_splash;
 ArrayList<AudioPlayer> sfx_learnNewRule = new ArrayList<AudioPlayer>();
 AudioPlayer sfx_understanding;
 AudioPlayer sfx_whee;
+ArrayList<AudioPlayer> sfx_snip = new ArrayList<AudioPlayer>();
+AudioPlayer sfx_cutthatout;
 
 Parent parent;
 ArrayList<Child> children;
@@ -50,22 +52,18 @@ void setup()
 {
   size(gridSizeX*tileSize+sidebarSizeX, gridSizeY*tileSize + statusBarSize);
 
-  world = new TileType[gridSizeX][gridSizeY];
-  for (int i = 0; i < gridSizeX; i++) {
-    for (int j = 0; j < gridSizeY; j++) {
-      world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
-    }
-  }
-
-  world = GenerateWorld(gridSizeX, gridSizeY, 2);
-
   int xPos, yPos;
-  do {
-    xPos = int(random(0, gridSizeX));
-    yPos = int(random(0, gridSizeY));
-  } 
-  while (world[xPos][yPos] != null);
-  parent = new Parent(xPos, yPos);
+  do{
+    world = GenerateWorld(gridSizeX, gridSizeY, 2);
+    do {
+      xPos = int(random(0, gridSizeX));
+      yPos = int(random(0, gridSizeY));
+    } 
+    while (world[xPos][yPos] != null);
+      parent = new Parent(xPos, yPos);
+  }
+  while(!VerifyWorldState(world, xPos, yPos));
+ 
 
   children = new ArrayList<Child>();
   for (int i = 0; i < numChildren; i++)
@@ -89,7 +87,7 @@ void setup()
   smooth();
   
   //Load in graphics
-  backdrop = loadImage("img/Backdrop3.png");
+  backdrop = loadImage("img/Backdrop2.png");
   
   //Set up the input handler.
   //inputHandler = InputHandler.getInstance();
@@ -102,8 +100,11 @@ void setup()
   sfx_learnNewRule.add(minim.loadFile("assets/newrule2.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule3.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule4.mp3"));
+  sfx_snip.add(minim.loadFile("assets/snip1.mp3"));
+  sfx_snip.add(minim.loadFile("assets/snip2.mp3"));
   sfx_understanding = minim.loadFile("assets/ohh.mp3");
   sfx_whee = minim.loadFile("assets/wee.mp3");
+  sfx_cutthatout = minim.loadFile("assets/cutthatout.mp3");
 }
 
 
@@ -133,6 +134,12 @@ void draw()
       }
       if(world[i][j] != null || !renderArt)
         rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      noFill();
+      stroke(50);
+      strokeWeight(1.75);
+      rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      strokeWeight(1);
+
       popMatrix();
     }
   }
@@ -276,7 +283,17 @@ void removeRuleRequest(int which) {
     if (which >= rules.size ()) {
       println ("There are only " + rules.size () + " rules");
     } else { 
+      println("removing a rule");
       child.removeRuleFromMemory(child.gitRules().get(which));
+      if(playSFX){
+        int index = int(random(2));
+         sfx_snip.get(index).rewind();
+         sfx_snip.get(index).play(); 
+         if(int(random(10)) < 2){
+            sfx_cutthatout.rewind();
+            sfx_cutthatout.play(); 
+         }
+      }
     }
   }
 }
