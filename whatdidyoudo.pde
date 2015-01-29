@@ -20,7 +20,8 @@ color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
 Parent parent;
-Child child;
+ArrayList<Child> children;
+int numChildren = 2;
 
 Minim minim;
 AudioPlayer sfx_splash;
@@ -50,12 +51,17 @@ void setup()
   while (world[xPos][yPos] != null);
   parent = new Parent(xPos, yPos);
 
-  do {
-    xPos = int(random(parent.xPos - 5, parent.xPos + 5));
-    yPos = int(random(parent.yPos - 5, parent.yPos + 5));
-  } 
-  while (!inBounds (xPos, yPos) || ((world[xPos][yPos] != null && xPos != parent.xPos && yPos != parent.yPos)));
-  child = new Child(xPos, yPos);
+  children = new ArrayList<Child>();
+  for (int i = 0; i < numChildren; i++)
+  {
+    do {
+      xPos = int(random(parent.xPos - 5, parent.xPos + 5));
+      yPos = int(random(parent.yPos - 5, parent.yPos + 5));
+    } 
+    while (!inBounds (xPos, yPos) || ((world[xPos][yPos] != null && xPos != parent.xPos && yPos != parent.yPos)));
+    Child child = new Child(xPos, yPos);
+    children.add(child);
+  }
 
   walkLeft = new WalkLeftCommand();
   walkRight = new WalkRightCommand();
@@ -99,15 +105,18 @@ void draw()
   String holdingString = "Parent is holding: ";
   holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
   text(holdingString, 10, gridSizeY*tileSize + 10);
-  holdingString = "Child is holding: ";
-  holdingString += (child.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
-  text(holdingString, 10, gridSizeY*tileSize + 30);
+  for (int i = 0; i < numChildren; i++)
+  {
+    holdingString = "Child " + str(i+1) + " is holding: ";
+    holdingString += (children.get(i).inventory != null && children.get(i).inventory == TileType.STONE) ? "a stone!" : "nothing";
+    text(holdingString, 10, gridSizeY*tileSize + 30 + i*20);
+  }
 
   parent.render();
-  child.render();
+  for (Child child : children) child.render();
 
   // draw the current set of rules
-  List<Rule> childRules = child.gitRules ();
+  List<Rule> childRules = children.get(0).gitRules();
   //List<Rule> childRules = testRules;
   println (childRules.size ());
   final int xOffset = gridSizeX * tileSize + tileSize;
@@ -142,23 +151,28 @@ void keyPressed()
   else if (key == 'd') occurredAction = drop.perform(parent);
   else if (key == 'r') setup();
   // now, the numbers that refer to rules
-  else if (key > '1' && key < '9') removeRuleRequest (key - '0');
+  else if (key > '1' && key < '9') removeRuleRequest(key - '0');
 
   //add the action to the event
   if (occurredAction != null) {
     event.addAction(occurredAction);
     println(event);
-    child.addEventToMemory(event);
+    for (Child child : children)
+      child.addEventToMemory(event);
   }
-
-  ArrayList<Condition> childConditions = checkConditions(child);
-  //execute the next command in the child's queue
-  child.executeNextCommand(childConditions);
-  child.learn();
+  
+  for (Child child : children) {
+    ArrayList<Condition> childConditions = checkConditions(child);
+    //execute the next command in the child's queue
+    child.executeNextCommand(childConditions);
+    child.learn();
+  }
 }
 
-void removeRuleRequest (int which) {
+void removeRuleRequest(int which) {
   // more logic here to use resources etc
-  child.removeRuleFromMemory (child.gitRules().get(which));
+  for (Child child : children) {
+    child.removeRuleFromMemory(child.gitRules().get(which));
+  }
 }
 
