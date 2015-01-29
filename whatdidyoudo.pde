@@ -21,7 +21,7 @@ TileType[][] world;
 color groundColor = color(183, 72, 72);
 color riverColor = color(44, 245, 240);
 color stoneColor = color(198, 192, 192);
-color appleColor = color(34, 42, 85);
+color strawberryColor = color(34, 42, 85);
 color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
@@ -121,8 +121,8 @@ void draw()
         fill(riverColor);
       } else if (world[i][j] == TileType.STONE) {
         fill(stoneColor);
-      } else if (world[i][j] == TileType.APPLE) {
-        fill(appleColor);
+      } else if (world[i][j] == TileType.STRAWBERRY) {
+        fill(strawberryColor);
       } else {
         fill(groundColor);
       }

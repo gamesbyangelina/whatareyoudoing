@@ -36,7 +36,7 @@ TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers) {
         res[i][j] = TileType.STONE;
       }
       if (heightmap[i][j] < 0.3 && random(1) < 0.05) {
-        res[i][j] = TileType.APPLE;
+        res[i][j] = TileType.STRAWBERRY;
       }
 
 
