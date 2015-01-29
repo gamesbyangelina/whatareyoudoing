@@ -38,6 +38,15 @@ abstract class Agent
   
 }
 
+class Enemy extends Agent
+{
+  public Enemy(int x, int y)
+  {
+    super(x, y);  
+  }
+}
+
+
 class Parent extends Agent
 {
   public Parent(int x, int y)
@@ -60,6 +69,8 @@ class Child extends Agent
   private Random rng = new Random();
   
   private int minSeparation = 4; // # of tiles separation to stop following
+
+  final int memorylimit = 20;
   
   public Child(int x, int y)
   {
@@ -85,8 +96,6 @@ class Child extends Agent
     learnFrequency = learnFreq;
     isLearning = true;
   }
-  
-//  public void addMove
   
   public Command moveTowardParent(int pX, int pY, int cX, int cY) {
     int xDist = pX - cX;
@@ -129,6 +138,10 @@ class Child extends Agent
   public void addEventToMemory(Event e) 
   {
     eventMemory.add(e);
+    if (eventMemory.size () > memoryLimit) {
+      // forget the earliest event
+      eventMemory.remove (0);
+    }
   }
   
   public void addRuleToMemory(Rule r) 
@@ -207,7 +220,8 @@ class Child extends Agent
     }
     
     // learn only when memory increases
-    if (eventMemory.size() % learnFrequency == 0) {
+    if (turn % learnFrequency == 0) { 
+    //if (eventMemory.size() % learnFrequency == 0) {
       println("child is learning!");
       // re-learn rules, obliterating old knowledge
       rules = (List<Rule>)simpleLearn(eventMemory);

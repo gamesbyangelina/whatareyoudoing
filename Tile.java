@@ -1,5 +1,6 @@
 enum TileType {
   RIVER, 
-  STONE
+  STONE,
+  APPLE
 };
 

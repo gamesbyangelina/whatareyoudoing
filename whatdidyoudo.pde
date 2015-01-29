@@ -1,9 +1,17 @@
+import ddf.minim.spi.*;
+import ddf.minim.signals.*;
+import ddf.minim.*;
+import ddf.minim.analysis.*;
+import ddf.minim.ugens.*;
+import ddf.minim.effects.*;
+
 int gridSizeX = 25;
 int gridSizeY = 25;
 int tileSize = 20;
 int sidebarSizeX = 300;
 int borderSize = 1;
 int statusBarSize = 100;
+int turn = 0;
 
 TileType[][] world;
 color groundColor = color(183, 72, 72);
@@ -14,6 +22,9 @@ color ERROR_COLOR = color(252, 10, 252);
 
 Parent parent;
 Child child;
+
+Minim minim;
+AudioPlayer sfx_splash;
 
 Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
@@ -53,6 +64,10 @@ void setup()
   drop = new DropCommand();
 
   smooth();
+  
+  //Load the audio stuff
+  minim = new Minim(this);
+  sfx_splash = minim.loadFile("splash.wav");
 }
 
 
@@ -80,9 +95,12 @@ void draw()
 
   //draw the status bar
   fill(255);
-  String holdingString = "Holding: ";
+  String holdingString = "Parent is holding: ";
   holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
   text(holdingString, 10, gridSizeY*tileSize + 10);
+  holdingString = "Child is holding: ";
+  holdingString += (child.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
+  text(holdingString, 10, gridSizeY*tileSize + 30);
 
   parent.render();
   child.render();
@@ -121,22 +139,24 @@ void keyPressed()
   else if (keyCode == DOWN) occurredAction = walkDown.perform(parent);
   else if (key == 'p') occurredAction = pickup.perform(parent);
   else if (key == 'd') occurredAction = drop.perform(parent);
+  else if (key == 'r') setup();
   // now, the numbers that refer to rules
   else if (key > '1' && key < '9') removeRuleRequest (key - '0');
 
   //add the action to the event
   if (occurredAction != null) {
     event.addAction(occurredAction);
+    println(event);
+    child.addEventToMemory(event);
   }
-
-  //todo: event is constructed at this point, but where do I send it??
-  println(event);
-  child.addEventToMemory(event);
 
   ArrayList<Condition> childConditions = checkConditions(child);
   //execute the next command in the child's queue
   child.executeNextCommand(childConditions, parent);
   child.learn();
+  
+  turn++;
+  
 }
 
 void removeRuleRequest (int which) {
