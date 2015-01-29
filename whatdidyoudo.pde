@@ -12,8 +12,6 @@ color stoneColor = color(198, 192, 192);
 color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
-List<Rule> testRules = testRuleCreation ();
-
 Parent parent;
 Child child;
 
@@ -92,8 +90,8 @@ void draw()
   child.render();
 
   // draw the current set of rules
-  //List<Rule> childRules = child.gitRules ();
-  List<Rule> childRules = testRules;
+  List<Rule> childRules = child.gitRules ();
+  //List<Rule> childRules = testRules;
   println (childRules.size ());
   final int xOffset = gridSizeX * tileSize + tileSize;
   final int yOffset = 0;

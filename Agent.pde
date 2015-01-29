@@ -51,7 +51,7 @@ class Child extends Agent
   private LinkedList<Command> commandQueue;
   
   private LinkedList<Event> eventMemory; // memory of events in the past
-  private LinkedList<Rule> rules; // learned rules
+  private List<Rule> rules; // learned rules
   
   private boolean isLearning; // whether child is learning
   private int learnFrequency; // number of turns before learning
@@ -75,7 +75,10 @@ class Child extends Agent
     renderColor = color(141, 115, 232);
     commandQueue = new LinkedList<Command>();
     eventMemory = new LinkedList<Event>();
-    rules = new LinkedList<Rule>();
+    // start with random rules
+
+    rules = testRuleCreation ();// new LinkedList<Rule>();
+    
     learnFrequency = learnFreq;
     isLearning = true;
   }
@@ -100,7 +103,7 @@ class Child extends Agent
     rules.add(r);
   }
   
-  public LinkedList<Rule> gitRules() {
+  public List<Rule> gitRules() {
     return rules;
   }
   
@@ -158,7 +161,7 @@ class Child extends Agent
     if (eventMemory.size() % learnFrequency == 0) {
       println("child is learning!");
       // re-learn rules, obliterating old knowledge
-      rules = (LinkedList<Rule>)simpleLearn(eventMemory);
+      rules = (List<Rule>)simpleLearn(eventMemory);
       println("child memory size: " + eventMemory.size() + " | # rules: " + rules.size());
     }
   }
