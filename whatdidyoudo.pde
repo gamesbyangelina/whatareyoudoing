@@ -25,7 +25,7 @@ color strawberryColor = color(34, 42, 85);
 color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
-boolean renderArt = false;
+boolean renderArt = true;
 PImage backdrop;
 
 boolean playSFX = true;
@@ -113,7 +113,7 @@ void draw()
   if(renderArt)
     image(backdrop, 0, 0, tileSize*gridSizeX, tileSize*gridSizeY);
   
-  handleInput();
+  //handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
