@@ -144,11 +144,11 @@ void keyPressed()
   //add the action to the event
   if (occurredAction != null) {
     event.addAction(occurredAction);
+    println(event);
+    child.addEventToMemory(event);
   }
 
-  //todo: event is constructed at this point, but where do I send it??
-  println(event);
-  child.addEventToMemory(event);
+  
 
   ArrayList<Condition> childConditions = checkConditions(child);
   //execute the next command in the child's queue
