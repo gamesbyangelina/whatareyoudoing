@@ -50,11 +50,52 @@ class Child extends Agent
 {
   private LinkedList<Command> commandQueue;
   
+  private LinkedList<Event> eventMemory; // memory of events in the past
+  private LinkedList<Rule> rules; // learned rules
+  
+  private boolean isLearning; // whether child is learning
+  private int learnFrequency; // number of turns before learning
+  
   public Child(int x, int y)
   {
     super(x, y);
     renderColor = color(141, 115, 232);
     commandQueue = new LinkedList<Command>();
+    eventMemory = new LinkedList<Event>();
+    rules = new LinkedList<Rule>();
+    learnFrequency = 5;
+    isLearning = true;
+  }
+  
+  public Child(int x, int y, int learnFreq)
+  {
+    super(x, y);
+    renderColor = color(141, 115, 232);
+    commandQueue = new LinkedList<Command>();
+    eventMemory = new LinkedList<Event>();
+    rules = new LinkedList<Rule>();
+    learnFrequency = learnFreq;
+    isLearning = true;
+  }
+  
+  public void addEventToMemory(Event e) 
+  {
+    eventMemory.add(e);
+  }
+  
+  public void addRuleToMemory(Rule r) 
+  {
+    rules.add(r);
+  }
+  
+  public void removeEventFromMemory(Event e) 
+  {
+    eventMemory.remove(e);
+  }
+  
+  public void removeRuleFromMemory(Rule r) 
+  {
+    rules.add(r);
   }
   
   public void addCommandToQueue(Command c)
@@ -78,5 +119,25 @@ class Child extends Agent
   public boolean hasCommandsInQueue()
   {
     return commandQueue.size() > 0;
+  }
+  
+  public void learn()
+  {
+    // only learn if child is in learning phase
+    if (!isLearning) {
+      return;
+    }
+    
+    // learn only when memory increases
+    if (eventMemory.size() % learnFrequency == 0) {
+      println("child is learning!");
+      // re-learn rules, obliterating old knowledge
+      rules = (LinkedList<Rule>)simpleLearn(eventMemory);
+      println("child memory size: " + eventMemory.size() + " | # rules: " + rules.size());
+    }
+  }
+  
+  public void setLearning(boolean willLearn) {
+    isLearning = willLearn;
   }
 }
