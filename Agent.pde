@@ -177,13 +177,22 @@ class Child extends Agent
       Action a = nextActions.get(rng.nextInt(nextActions.size()));
       println("child next action: " + a);
       if (a == Action.move) {
-        commandQueue.add(walkUp);
+//        Facing.UP, Facing.DOWN, Facing.LEFT, Facing.RIGHT
+        if (a.direction == Facing.UP) {
+         commandQueue.add(walkUp); 
+        } else if (a.direction == Facing.RIGHT) {
+          commandQueue.add(walkRight);
+        } else if (a.direction == Facing.DOWN) {
+          commandQueue.add(walkDown);
+        } else if (a.direction == Facing.LEFT) {
+          commandQueue.add(walkLeft);
+        }
       } else if (a == Action.t_right) {
         commandQueue.add(walkRight);
       } else if (a == Action.t_left) {
-        commandQueue.add(walkDown);
-      } else if (a == Action.t_back) {
         commandQueue.add(walkLeft);
+      } else if (a == Action.t_back) {
+        commandQueue.add(walkDown);
       } else if (a == Action.pickup) {
         commandQueue.add(pickup);
       } else if (a == Action.drop) {
