@@ -56,7 +56,7 @@ void update()
 {
   //execute the next command in the child's queue
 //  child.executeNextCommand();
-  child.learn();
+//  child.learn();
 }
 
 void draw()
@@ -118,4 +118,8 @@ void keyPressed()
   //todo: event is constructed at this point, but where do I send it??
   println(event);
   child.addEventToMemory(event);
+  
+    //execute the next command in the child's queue
+//  child.executeNextCommand();
+  child.learn();
 }
