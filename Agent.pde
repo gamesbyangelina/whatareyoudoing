@@ -35,6 +35,7 @@ abstract class Agent
     int yDir = (direction == Facing.RIGHT || direction == Facing.LEFT) ? 0 : (direction == Facing.UP) ? -1 : 1;
     return new PVector(xDir, yDir);
   }
+  
 }
 
 class Parent extends Agent
@@ -57,6 +58,8 @@ class Child extends Agent
   private int learnFrequency; // number of turns before learning
   
   private Random rng = new Random();
+  
+  private int minSeparation = 4; // # of tiles separation to stop following
   
   public Child(int x, int y)
   {
@@ -81,6 +84,46 @@ class Child extends Agent
     
     learnFrequency = learnFreq;
     isLearning = true;
+  }
+  
+//  public void addMove
+  
+  public Command moveTowardParent(int pX, int pY, int cX, int cY) {
+    int xDist = pX - cX;
+    int yDist = pY - cY;
+    
+    Command returnCommand = null;
+    if (Math.abs(xDist) + Math.abs(yDist) < minSeparation) {
+      return returnCommand;
+    }
+    
+    if (Math.abs(xDist) > Math.abs(yDist)) {
+      println("x distance larger");
+      // further on x-axis -> move on x-axis
+      if (xDist > 0) {
+        // parent further right than child
+        println("child walking right");
+        returnCommand = walkRight;
+      } else {
+        // parent further left than child
+        println("child walking left");
+        returnCommand = walkLeft;
+      }
+    } else {
+      println("y distance larger");
+      // further on y-axis -> move on y-axis
+      if (yDist > 0) {
+        // parent above child
+        println("child walking up");
+        returnCommand = walkDown;
+      } else {
+        // parent below child
+        println("child walking down");
+        returnCommand = walkUp;
+      }
+    }
+    
+    return returnCommand;
   }
   
   public void addEventToMemory(Event e) 
@@ -117,7 +160,7 @@ class Child extends Agent
     commandQueue.addAll(c);
   }
   
-  public void executeNextCommand(List<Condition> state)
+  public void executeNextCommand(List<Condition> state, Parent p)
   {
     println("child is executing!");
     ArrayList<Action> nextActions = (ArrayList<Action>)gitActionSet(rules, state);
@@ -136,6 +179,12 @@ class Child extends Agent
         commandQueue.add(pickup);
       } else if (a == Action.drop) {
         commandQueue.add(drop);
+      }
+    } else {
+      Command follow = moveTowardParent(p.xPos, p.yPos, this.xPos, this.yPos);
+      if (follow != null) {
+        println("child moving toward parent!");
+        commandQueue.add(follow);
       }
     }
     
