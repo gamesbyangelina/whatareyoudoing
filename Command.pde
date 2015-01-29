@@ -29,8 +29,11 @@ class PickupCommand extends Command
 
 class DropCommand extends Command
 {
+  boolean failedToDrop;
+  
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
+    failedToDrop = false;
     if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y))){ //the tile the player is facing is in world bounds
         //case: stone + river -> ground
        if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.RIVER){
@@ -45,12 +48,12 @@ class DropCommand extends Command
        //case: stone + stone -> <invalid>
        //todo: this should NOT end the turn
        else if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE){
-           //Do nothing
+           failedToDrop = true;
        }
     }
   }
   
-  Action getKind() { return Action.drop; }
+  Action getKind() { return (failedToDrop) ? null : Action.drop; }
 }
 
 abstract class WalkCommand extends Command
