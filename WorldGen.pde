@@ -31,10 +31,14 @@ TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers) {
       //We multiply by this extra factor to try and encourage a downward gradient
       heightmap[i][j] = noise(i, j) * ((tiles_high+1-j+1)/(tiles_high*0.6));
       res[i][j] = null;
-
+      
       if (heightmap[i][j] > 0.6 && random(1) < 0.05) {
         res[i][j] = TileType.STONE;
       }
+      if (heightmap[i][j] < 0.3 && random(1) < 0.05) {
+        res[i][j] = TileType.APPLE;
+      }
+
 
       if (random(1) < 0.008) {
         if (worldgen_debug)
