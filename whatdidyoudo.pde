@@ -260,14 +260,20 @@ void keyPressed()
     child.executeNextCommand(childConditions);
     child.learn();
   }
-  
   turn++;
 }
 
 void removeRuleRequest(int which) {
+  which = which - 1;
+  println ("I want to remove rule " + which);
   // more logic here to use resources etc
   for (Child child : children) {
-    child.removeRuleFromMemory(child.gitRules().get(which));
+    List<Rule> rules = child.gitRules ();
+    if (which >= rules.size ()) {
+      println ("There are only " + rules.size () + " rules");
+    } else { 
+      child.removeRuleFromMemory(child.gitRules().get(which));
+    }
   }
 }
 
