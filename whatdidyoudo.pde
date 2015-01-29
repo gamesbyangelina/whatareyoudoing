@@ -37,6 +37,7 @@ ArrayList<AudioPlayer> sfx_learnNewRule = new ArrayList<AudioPlayer>();
 AudioPlayer sfx_understanding;
 AudioPlayer sfx_whee;
 ArrayList<AudioPlayer> sfx_snip = new ArrayList<AudioPlayer>();
+AudioPlayer sfx_cutthatout;
 
 Parent parent;
 ArrayList<Child> children;
@@ -108,6 +109,7 @@ void setup()
   sfx_snip.add(minim.loadFile("assets/snip2.mp3"));
   sfx_understanding = minim.loadFile("assets/ohh.mp3");
   sfx_whee = minim.loadFile("assets/wee.mp3");
+  sfx_cutthatout = minim.loadFile("assets/cutthatout.mp3");
 }
 
 
@@ -296,6 +298,10 @@ void removeRuleRequest(int which) {
         int index = int(random(2));
          sfx_snip.get(index).rewind();
          sfx_snip.get(index).play(); 
+         if(int(random(10)) < 2){
+            sfx_cutthatout.rewind();
+            sfx_cutthatout.play(); 
+         }
       }
     }
   }
