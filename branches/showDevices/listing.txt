@@ -1,0 +1,14 @@
+##########################################################################################
+                   Game Control Plus  - available devices
+                   --------------------------------------
+  0  Mouse     [Mouse]  on  [Unknown]
+  1  Keyboard     [Keyboard]  on  [Unknown]
+  2  SAM     [Unknown]  on  [Unknown]
+  3  SAM     [Unknown]  on  [Unknown]
+  4  SAM     [Unknown]  on  [Unknown]
+  5  Controller (XBOX 360 For Windows)     [Gamepad]  on  [Unknown]
+  6  SAM     [Unknown]  on  [Unknown]
+  7  MICROSOFT     [Unknown]  on  [Unknown]
+  8  Atmel maXTouch Control     [Unknown]  on  [Unknown]
+##########################################################################################
+
