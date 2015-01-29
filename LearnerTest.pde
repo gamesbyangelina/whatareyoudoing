@@ -1,10 +1,10 @@
-public void runSimpleTest(){
+public List<Rule> testRuleCreation (){
  
   Random random = new Random(); 
   List<Event> allEvents = new ArrayList<Event>();
   
   int maximumPreconditions = 3;
-  int totalEvents = 5;
+  int totalEvents = 20;
   
   for(int i = 0; i < totalEvents; i++){
 
@@ -31,9 +31,10 @@ public void runSimpleTest(){
   
   List<Rule> rules = simpleLearn(allEvents);
   
-  for(Rule currentRule: rules){
-    println(currentRule);
-  }
+//  for(Rule currentRule: rules){
+//    println(currentRule);
+//  }
    
+   return rules;
   
 }
