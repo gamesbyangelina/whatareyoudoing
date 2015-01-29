@@ -1,3 +1,7 @@
+import org.gamecontrolplus.gui.*;
+import org.gamecontrolplus.*;
+import net.java.games.input.*;
+
 import ddf.minim.spi.*;
 import ddf.minim.signals.*;
 import ddf.minim.*;
@@ -22,6 +26,8 @@ color ERROR_COLOR = color(252, 10, 252);
 
 Parent parent;
 Child child;
+
+InputHandler inputHandler;
 
 Minim minim;
 AudioPlayer sfx_splash;
@@ -65,6 +71,11 @@ void setup()
 
   smooth();
   
+  
+  //Set up the input handler.
+  //inputHandler = InputHandler.getInstance();
+  inputHandler = new InputHandler(this);
+  
   //Load the audio stuff
   minim = new Minim(this);
   sfx_splash = minim.loadFile("splash.wav");
@@ -74,6 +85,7 @@ void setup()
 void draw()
 {
   background(0);
+  handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
@@ -123,6 +135,65 @@ void draw()
     line++;
   }
 }
+
+/**
+ * This method handles all of the input handling for the gamepad.
+ * Note that unlike the traditional input methods such as the keyPressed
+ * method, we need to call this every frame in the main game code.
+ */
+void handleInput()
+{
+  Event event = new Event();
+  ArrayList<Condition> conditions = checkConditions(parent);
+  event.addPreconditions(conditions);
+
+  println("Grabbing Input...");  
+  /**
+   * Next, let us focus on the actions, such as picking up, dropping etc.
+   * Not to mention all of the movement.  This is reliant upon the buttons on the game pad.
+   */
+  Action occurredAction = null;
+  
+  //Grab the input handler and update for the current frame.
+  inputHandler.updateInput();
+  
+  if(inputHandler.buttonPressed(InputButtons.A)){
+    pickup.perform(parent);
+  }
+  else if(inputHandler.buttonPressed(InputButtons.B)){
+    drop.perform(parent);  
+  }
+  
+  if(inputHandler.buttonPressed(InputButtons.DPAD_LEFT)){
+    occurredAction = walkLeft.perform(parent);
+  }
+  else if(inputHandler.buttonPressed(InputButtons.DPAD_RIGHT)){
+    occurredAction = walkRight.perform(parent);
+  }
+  
+  if(inputHandler.buttonPressed(InputButtons.DPAD_UP)){
+    occurredAction = walkUp.perform(parent);
+  }
+  else if(inputHandler.buttonPressed(InputButtons.DPAD_DOWN)){
+    occurredAction = walkDown.perform(parent);
+  }
+  
+  
+  //add the action to the event
+  if (occurredAction != null) {
+    event.addAction(occurredAction);
+    println(event);
+    child.addEventToMemory(event);
+  }
+
+  ArrayList<Condition> childConditions = checkConditions(child);
+  //execute the next command in the child's queue
+  child.executeNextCommand(childConditions, parent);
+  child.learn();
+  
+  turn++;
+}
+
 
 void keyPressed()
 {
