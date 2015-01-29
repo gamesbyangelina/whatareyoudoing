@@ -2,6 +2,7 @@ int gridSizeX = 25;
 int gridSizeY = 25;
 int tileSize = 20;
 int borderSize = 1;
+int statusBarSize = 100;
 
 TileType[][] world;
 color groundColor = color(183, 72, 72);
@@ -11,11 +12,13 @@ color stoneColor = color(198, 192, 192);
 color ERROR_COLOR = color(252, 10, 252); 
 
 Parent parent;
+Child child;
 
+Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
 void setup()
 {
-  size(gridSizeX*tileSize, gridSizeY*tileSize);
+  size(gridSizeX*tileSize, gridSizeY*tileSize + statusBarSize);
   
   world = new TileType[gridSizeX][gridSizeY];
   for (int i = 0; i < gridSizeX; i++) {
@@ -26,7 +29,25 @@ void setup()
   
   world = GenerateWorld(gridSizeX, gridSizeY, 3);
   
-  parent = new Parent();
+  int xPos, yPos;
+  do {
+    xPos = int(random(0, gridSizeX));
+    yPos = int(random(0, gridSizeY));
+  } while (world[xPos][yPos] != null);
+  parent = new Parent(xPos, yPos);
+  
+  do {
+    xPos = int(random(parent.xPos - 5, parent.xPos + 5));
+    yPos = int(random(parent.yPos - 5, parent.yPos + 5));
+  } while (!inBounds(xPos, yPos) || ((world[xPos][yPos] != null && xPos != parent.xPos && yPos != parent.yPos)));
+  child = new Child(xPos, yPos);
+  
+  walkLeft = new WalkLeftCommand();
+  walkRight = new WalkRightCommand();
+  walkUp = new WalkUpCommand();
+  walkDown = new WalkDownCommand();
+  pickup = new PickupCommand();
+  drop = new DropCommand();
   
   smooth();
 }
@@ -51,21 +72,40 @@ void draw()
       else {
         fill(groundColor);
       }
-      rect(0, 0, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
       popMatrix();  
     }
   }
+  
+  //draw the status bar
+  fill(255);
+  String holdingString = "Holding: ";
+  holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
+  text(holdingString, 10, gridSizeY*tileSize + 10);
+  
   parent.render();
+  child.render();
 }
 
-WalkLeftCommand walkLeft = new WalkLeftCommand();
-WalkRightCommand walkRight = new WalkRightCommand();
-WalkUpCommand walkUp = new WalkUpCommand();
-WalkDownCommand walkDown = new WalkDownCommand();
 void keyPressed()
 {
-  if (keyCode == LEFT) walkLeft.execute(parent);
-  else if (keyCode == RIGHT) walkRight.execute(parent);
-  else if (keyCode == UP) walkUp.execute(parent);
-  else if (keyCode == DOWN) walkDown.execute(parent);
+  Event event = new Event();
+  
+  //what is true about the world before the action takes place?
+  ArrayList<Condition> conditions = checkConditions(parent);
+  event.addPreconditions(conditions);
+  
+  Action occurredAction = null;
+  if (keyCode == LEFT) occurredAction = walkLeft.perform(parent);
+  else if (keyCode == RIGHT) occurredAction = walkRight.perform(parent);
+  else if (keyCode == UP) occurredAction = walkUp.perform(parent);
+  else if (keyCode == DOWN) occurredAction = walkDown.perform(parent);
+  else if (key == 'p') occurredAction = pickup.perform(parent);
+  else if (key == 'd') occurredAction = drop.perform(parent);
+  
+  //add the action to the event
+  event.addAction(occurredAction);
+  
+  //todo: event is constructed at this point, but where do I send it??
+  println(event);
 }

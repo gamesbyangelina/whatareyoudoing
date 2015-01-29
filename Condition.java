@@ -18,3 +18,5 @@ enum Condition {
     return VALUES.get(RANDOM.nextInt(SIZE));
   }
 }
+
+

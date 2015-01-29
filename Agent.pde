@@ -5,9 +5,9 @@ abstract class Agent
   public TileType inventory;
   color renderColor;
   
-  public Agent() {
-    xPos = int(random(0, gridSizeX));
-    yPos = int(random(0, gridSizeY));
+  public Agent(int x, int y) {
+    xPos = x;
+    yPos = y;
     direction = Facing.LEFT;
     inventory = null;
   }
@@ -17,7 +17,7 @@ abstract class Agent
     noStroke();
     fill(renderColor);
     rect(xPos*tileSize + borderSize*2, yPos*tileSize + borderSize*2, 
-          tileSize - borderSize*6, tileSize - borderSize*6);
+          tileSize - borderSize*4, tileSize - borderSize*4);
     fill(255);
     if (direction == Facing.UP) 
       ellipse(xPos*tileSize + tileSize/2, yPos*tileSize + borderSize*4, 2, 2);
@@ -39,18 +39,42 @@ abstract class Agent
 
 class Parent extends Agent
 {
-  public Parent()
+  public Parent(int x, int y)
   {
-    super();
+    super(x, y);
     renderColor = color(77, 35, 219);
   }
 }
 
 class Child extends Agent
 {
-  public Child()
+  private LinkedList<Command> commandQueue;
+  
+  public Child(int x, int y)
   {
-    super();
+    super(x, y);
     renderColor = color(141, 115, 232);
+    commandQueue = new LinkedList<Command>();
+  }
+  
+  public void addCommandToQueue(Command c)
+  {
+    commandQueue.add(c);
+  }
+  
+  public void addAllCommandsToQueue(ArrayList<Command> c)
+  {
+    commandQueue.addAll(c);
+  }
+  
+  public void executeNextCommand()
+  {
+    Action a = commandQueue.remove().perform(this);
+    println("child just: " + a);
+  }
+  
+  public boolean hasCommandsInQueue()
+  {
+    return commandQueue.size() > 0;
   }
 }

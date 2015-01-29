@@ -1,31 +1,62 @@
-interface Command
+abstract class Command
 {
-  void execute(Agent actor);
+  public Command() {}
+  
+  public Action perform(Agent actor) {
+    execute(actor);
+    return getKind();
+  }
+  
+  abstract protected void execute(Agent actor);
+  abstract public Action getKind();
 }
 
-class PickupCommand implements Command
+class PickupCommand extends Command
 {
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
-    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE) {
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
+            && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE  //the tile is a stone
+            && actor.inventory == null) //the actor isn't already holding something
+    {
       actor.inventory = TileType.STONE;
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
     }
   }
+  
+  Action getKind() { return Action.pickup; };
 }
 
-abstract class WalkCommand implements Command
+class DropCommand extends Command
 {
+  void execute(Agent actor) {
+    PVector dir = actor.getFacingDirection();
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
+            && actor.inventory == TileType.STONE) //the actor is holding a stone
+    {
+      actor.inventory = null;
+      world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
+    }
+  }
+  
+  Action getKind() { return Action.drop; }
+}
+
+abstract class WalkCommand extends Command
+{
+  boolean changedDirection;
+  
   void execute(Agent actor) {
     boolean isFacing = checkIfFacing(actor);
     if (isFacing) {
       updatePosition(actor);
       resolveCollision(actor);
     }
+    changedDirection = !isFacing;
   }  
   
   void resolveCollision(Agent actor) {
-    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] == TileType.RIVER) rollBackPosition(actor);
+    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) rollBackPosition(actor);
   }
   
   abstract boolean checkIfFacing(Agent actor);
@@ -43,6 +74,7 @@ class WalkLeftCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos -= 1; }
   void rollBackPosition(Agent actor) { actor.xPos += 1; } 
+  Action getKind() { return (changedDirection) ? Action.f_left : Action.m_left; }
 }
 
 class WalkRightCommand extends WalkCommand
@@ -55,6 +87,7 @@ class WalkRightCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos += 1; }
   void rollBackPosition(Agent actor) { actor.xPos -= 1; }
+  Action getKind() { return (changedDirection) ? Action.f_right : Action.m_right; }
 }
 
 class WalkUpCommand extends WalkCommand
@@ -67,6 +100,7 @@ class WalkUpCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos -= 1; }
   void rollBackPosition(Agent actor) { actor.yPos += 1; }
+  Action getKind() { return (changedDirection) ? Action.f_up : Action.m_up; }
 }
 
 class WalkDownCommand extends WalkCommand
@@ -79,4 +113,5 @@ class WalkDownCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos += 1; }
   void rollBackPosition(Agent actor) { actor.yPos -= 1; }
+  Action getKind() { return (changedDirection) ? Action.f_down : Action.m_down; }
 }
