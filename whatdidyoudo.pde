@@ -1,6 +1,7 @@
 int gridSizeX = 25;
 int gridSizeY = 25;
 int tileSize = 20;
+int sidebarSizeX = 200;
 int borderSize = 1;
 int statusBarSize = 100;
 
@@ -18,7 +19,7 @@ Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
 void setup()
 {
-  size(gridSizeX*tileSize, gridSizeY*tileSize + statusBarSize);
+  size(gridSizeX*tileSize + sidebarSizeX, gridSizeY*tileSize + statusBarSize);
   
   world = new TileType[gridSizeX][gridSizeY];
   for (int i = 0; i < gridSizeX; i++) {
@@ -83,6 +84,8 @@ void draw()
       rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
       popMatrix();  
     }
+    
+    
   }
   
   //draw the status bar

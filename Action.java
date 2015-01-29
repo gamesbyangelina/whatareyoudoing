@@ -1,17 +1,23 @@
 import java.util.*;
 
 enum Action {
-  m_up,
-  m_right,
-  m_down,
-  m_left,
-  f_up,
-  f_right,
-  f_down,
-  f_left,
+//  m_up,
+//  m_right,
+//  m_down,
+//  m_left,
+//  f_up,
+//  f_right,
+//  f_down,
+//  f_left,
+  move,
+  t_left,
+  t_right,
+  t_back,
   pickup,
   drop,
   eat;
+  
+  
   
   private static final List<Action> VALUES = Collections.unmodifiableList(Arrays.asList(values()));
   private static final int SIZE = VALUES.size();
