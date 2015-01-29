@@ -185,7 +185,7 @@ class Child extends Agent
   
   public void executeNextCommand(List<Condition> state)
   {
-    println("child is executing!");
+//    println("child is executing!");
     ArrayList<Action> nextActions = (ArrayList<Action>)gitActionSet(rules, state);
     if (nextActions.size() > 0) {
       Action a = nextActions.get(rng.nextInt(nextActions.size()));
@@ -248,7 +248,7 @@ class Child extends Agent
     } else {
       Command follow = moveTowardAgent(parent, minSeparation);
       if (follow != null) {
-        println("child moving toward parent!");
+//        println("child moving toward parent!");
         commandQueue.add(follow);
       }
     }
