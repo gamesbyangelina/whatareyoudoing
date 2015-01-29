@@ -30,6 +30,8 @@ void setup()
   
   world = GenerateWorld(gridSizeX, gridSizeY, 3);
   
+  
+  
   int xPos, yPos;
   do {
     xPos = int(random(0, gridSizeX));
@@ -51,6 +53,7 @@ void setup()
   drop = new DropCommand();
   
   smooth();
+   
 }
 
 
@@ -77,6 +80,8 @@ void draw()
       popMatrix();  
     }
     
+   
+    
     // draw the current set of rules
     List<Rule> childRules = child.gitRules ();
     final int xOffset = gridSizeX * tileSize + tileSize;
@@ -88,6 +93,9 @@ void draw()
     for (Rule rule : childRules) {
       text(i+" "+rule.toString(),xOffset,yOffset+i*linewidth);      
     }
+    
+     
+    
   }
   
   //draw the status bar
