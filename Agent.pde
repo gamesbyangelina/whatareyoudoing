@@ -77,7 +77,8 @@ class Enemy extends Agent
   
   public void act()
   {
-      //pick the closest child and move towards it
+      //pick a random child and move towards it
+      
   }
 }
 
