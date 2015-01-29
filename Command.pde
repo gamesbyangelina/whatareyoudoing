@@ -16,11 +16,17 @@ class PickupCommand extends Command
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
     if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
-            && world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE  //the tile is a stone
             && actor.inventory == null) //the actor isn't already holding something
     {
-      actor.inventory = TileType.STONE;
-      world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
+      if (world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE) {
+        actor.inventory = TileType.STONE;          //the tile is a stone
+        world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
+      }
+      else if (world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.APPLE) {
+        actor.inventory = TileType.APPLE;          //the tile is a stone
+        world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;            
+      }
+     
     }
   }
   
