@@ -1,17 +1,9 @@
-abstract class Command
+interface Command
 {
-  public Command() {}
-  
-  public Action perform(Agent actor) {
-    execute(actor);
-    return getKind();
-  }
-  
-  abstract protected void execute(Agent actor);
-  abstract public Action getKind();
+  void execute(Agent actor);
 }
 
-class PickupCommand extends Command
+class PickupCommand implements Command
 {
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
@@ -23,11 +15,9 @@ class PickupCommand extends Command
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
     }
   }
-  
-  Action getKind() { return Action.pickup; };
 }
 
-class DropCommand extends Command
+class DropCommand implements Command
 {
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
@@ -38,21 +28,16 @@ class DropCommand extends Command
       world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
     }
   }
-  
-  Action getKind() { return Action.drop; }
 }
 
-abstract class WalkCommand extends Command
+abstract class WalkCommand implements Command
 {
-  boolean changedDirection;
-  
   void execute(Agent actor) {
     boolean isFacing = checkIfFacing(actor);
     if (isFacing) {
       updatePosition(actor);
       resolveCollision(actor);
     }
-    changedDirection = !isFacing;
   }  
   
   void resolveCollision(Agent actor) {
@@ -74,7 +59,6 @@ class WalkLeftCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos -= 1; }
   void rollBackPosition(Agent actor) { actor.xPos += 1; } 
-  Action getKind() { return (changedDirection) ? Action.f_left : Action.m_left; }
 }
 
 class WalkRightCommand extends WalkCommand
@@ -87,7 +71,6 @@ class WalkRightCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos += 1; }
   void rollBackPosition(Agent actor) { actor.xPos -= 1; }
-  Action getKind() { return (changedDirection) ? Action.f_right : Action.m_right; }
 }
 
 class WalkUpCommand extends WalkCommand
@@ -100,7 +83,6 @@ class WalkUpCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos -= 1; }
   void rollBackPosition(Agent actor) { actor.yPos += 1; }
-  Action getKind() { return (changedDirection) ? Action.f_up : Action.m_up; }
 }
 
 class WalkDownCommand extends WalkCommand
@@ -113,5 +95,4 @@ class WalkDownCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos += 1; }
   void rollBackPosition(Agent actor) { actor.yPos -= 1; }
-  Action getKind() { return (changedDirection) ? Action.f_down : Action.m_down; }
 }
