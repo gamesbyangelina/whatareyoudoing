@@ -36,6 +36,7 @@ AudioPlayer sfx_splash;
 ArrayList<AudioPlayer> sfx_learnNewRule = new ArrayList<AudioPlayer>();
 AudioPlayer sfx_understanding;
 AudioPlayer sfx_whee;
+ArrayList<AudioPlayer> sfx_snip = new ArrayList<AudioPlayer>();
 
 Parent parent;
 ArrayList<Child> children;
@@ -103,6 +104,8 @@ void setup()
   sfx_learnNewRule.add(minim.loadFile("assets/newrule2.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule3.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule4.mp3"));
+  sfx_snip.add(minim.loadFile("assets/snip1.mp3"));
+  sfx_snip.add(minim.loadFile("assets/snip2.mp3"));
   sfx_understanding = minim.loadFile("assets/ohh.mp3");
   sfx_whee = minim.loadFile("assets/wee.mp3");
 }
@@ -255,7 +258,7 @@ void keyPressed()
   else if (key == 'd') occurredAction = drop.perform(parent);
   else if (key == 'r') setup();
   // now, the numbers that refer to rules
-  else if (key > '1' && key < '9') removeRuleRequest(key - '0');
+  else if (key >= '1' && key < '9') removeRuleRequest(key - '0');
 
   //add the action to the event
   if (occurredAction != null) {
@@ -287,7 +290,13 @@ void removeRuleRequest(int which) {
     if (which >= rules.size ()) {
       println ("There are only " + rules.size () + " rules");
     } else { 
+      println("removing a rule");
       child.removeRuleFromMemory(child.gitRules().get(which));
+      if(playSFX){
+        int index = int(random(2));
+         sfx_snip.get(index).rewind();
+         sfx_snip.get(index).play(); 
+      }
     }
   }
 }
