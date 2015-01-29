@@ -189,16 +189,18 @@ void handleInput()
   
   
   //add the action to the event
-  if (occurredAction != null) {
-    event.addAction(occurredAction);
-    println(event);
-    child.addEventToMemory(event);
-  }
+  for (Child child : children) {
+    if (occurredAction != null) {
+      event.addAction(occurredAction);
+      println(event);
+      child.addEventToMemory(event);
+    }
 
-  ArrayList<Condition> childConditions = checkConditions(child);
-  //execute the next command in the child's queue
-  child.executeNextCommand(childConditions, parent);
-  child.learn();
+    ArrayList<Condition> childConditions = checkConditions(child);
+    //execute the next command in the child's queue
+    child.executeNextCommand(childConditions, parent);
+    child.learn();
+  }
   
   turn++;
 }
@@ -234,7 +236,7 @@ void keyPressed()
   for (Child child : children) {
     ArrayList<Condition> childConditions = checkConditions(child);
     //execute the next command in the child's queue
-    child.executeNextCommand(childConditions);
+    child.executeNextCommand(childConditions, parent);
     child.learn();
   }
   

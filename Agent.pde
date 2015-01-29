@@ -48,7 +48,7 @@ class Enemy extends Agent
   
   public void act()
   {
-    
+      
   }
 }
 
