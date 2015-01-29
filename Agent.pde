@@ -97,7 +97,7 @@ class Child extends Agent
   public void addEventToMemory(Event e) 
   {
     eventMemory.add(e);
-    if (eventMemory.size () > memoryLimit) {
+    if (eventMemory.size () > memorylimit) {
       // forget the earliest event
       eventMemory.remove (0);
     }
