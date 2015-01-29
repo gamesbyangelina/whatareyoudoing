@@ -79,7 +79,7 @@ void draw()
     }
     
     // draw the current set of rules
-    List<Rule> childRules = null;//child.gitRules ();
+    List<Rule> childRules = child.gitRules ();
     final int xOffset = gridSizeX * tileSize + tileSize;
     final int yOffset = 0;
     i = 1;
@@ -130,5 +130,5 @@ void keyPressed()
 
 void removeRuleRequest (int which) {
   // more logic here to use resources etc
-  child.removeRuleFromMemory (child.gitRules(which));
+  child.removeRuleFromMemory (child.gitRules().get(which));
 }
