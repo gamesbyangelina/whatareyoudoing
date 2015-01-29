@@ -32,6 +32,8 @@ boolean playSFX = true;
 Minim minim;
 AudioPlayer sfx_splash;
 ArrayList<AudioPlayer> sfx_learnNewRule = new ArrayList<AudioPlayer>();
+AudioPlayer sfx_understanding;
+AudioPlayer sfx_whee;
 
 Parent parent;
 ArrayList<Child> children;
@@ -99,6 +101,8 @@ void setup()
   sfx_learnNewRule.add(minim.loadFile("assets/newrule2.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule3.mp3"));
   sfx_learnNewRule.add(minim.loadFile("assets/newrule4.mp3"));
+  sfx_understanding = minim.loadFile("assets/ohh.mp3");
+  sfx_whee = minim.loadFile("assets/wee.mp3");
 }
 
 
@@ -109,7 +113,7 @@ void draw()
   if(renderArt)
     image(backdrop, 0, 0, tileSize*gridSizeX, tileSize*gridSizeY);
   
-  // handleInput();
+  handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
@@ -136,12 +140,12 @@ void draw()
   fill(255);
   String holdingString = "Parent is holding: ";
   holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
-  text(holdingString, 10, gridSizeY*tileSize + 10);
+  text(holdingString, 10, gridSizeY*tileSize + 20);
   for (int i = 0; i < numChildren; i++)
   {
     holdingString = "Child " + str(i+1) + " is holding: ";
     holdingString += (children.get(i).inventory != null && children.get(i).inventory == TileType.STONE) ? "a stone!" : "nothing";
-    text(holdingString, 10, gridSizeY*tileSize + 30 + i*20);
+    text(holdingString, 10, gridSizeY*tileSize + 50 + i*25);
   }
 
   parent.render();
