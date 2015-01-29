@@ -28,7 +28,31 @@ List<Rule> simpleLearn (List<Event> events) {
       println ("Adding rule!");
         rules.add (rule);
     }
-    else println ("Discarding rule");
+//    else println ("Discarding rule");
   }
   return rules;
+}
+
+// match a set of rules to a set of conditions to pick next action
+List<Action> gitActionSet(List<Rule> rules, List<Condition> state) {
+  ArrayList<Action> actions = new ArrayList<Action>();
+  boolean willAdd = true;
+  
+  for (Rule rule : rules) {
+    println("testing rule: " + rule);
+    willAdd = true;
+    for (Condition precondition : rule.preconditions) {
+      // don't add actions if any precondition fails
+      if (!state.contains(precondition)) { 
+        willAdd = false;
+      }
+    }
+    
+    if (willAdd) {
+      println("adding action: " + rule.consequence);
+      actions.add(rule.consequence); 
+    }
+  }
+  
+  return actions;
 }

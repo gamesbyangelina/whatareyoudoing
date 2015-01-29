@@ -56,6 +56,8 @@ class Child extends Agent
   private boolean isLearning; // whether child is learning
   private int learnFrequency; // number of turns before learning
   
+  private Random rng = new Random();
+  
   public Child(int x, int y)
   {
     super(x, y);
@@ -112,8 +114,28 @@ class Child extends Agent
     commandQueue.addAll(c);
   }
   
-  public void executeNextCommand()
+  public void executeNextCommand(List<Condition> state)
   {
+    println("child is executing!");
+    ArrayList<Action> nextActions = (ArrayList<Action>)gitActionSet(rules, state);
+    if (nextActions.size() > 0) {
+      Action a = nextActions.get(rng.nextInt(nextActions.size()));
+      println("child next action: " + a);
+      if (a == Action.m_up) {
+        commandQueue.add(walkUp);
+      } else if (a == Action.m_right) {
+        commandQueue.add(walkRight);
+      } else if (a == Action.m_down) {
+        commandQueue.add(walkDown);
+      } else if (a == Action.m_left) {
+        commandQueue.add(walkLeft);
+      } else if (a == Action.pickup) {
+        commandQueue.add(pickup);
+      } else if (a == Action.drop) {
+        commandQueue.add(drop);
+      }
+    }
+    
     if (hasCommandsInQueue()) {
       Action a = commandQueue.remove().perform(this);
       println("child just: " + a);
