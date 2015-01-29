@@ -178,21 +178,48 @@ class Child extends Agent
       println("child next action: " + a);
       if (a == Action.move) {
 //        Facing.UP, Facing.DOWN, Facing.LEFT, Facing.RIGHT
-        if (a.direction == Facing.UP) {
+        if (this.direction == Facing.UP) {
          commandQueue.add(walkUp); 
-        } else if (a.direction == Facing.RIGHT) {
+        } else if (this.direction == Facing.RIGHT) {
           commandQueue.add(walkRight);
-        } else if (a.direction == Facing.DOWN) {
+        } else if (this.direction == Facing.DOWN) {
           commandQueue.add(walkDown);
-        } else if (a.direction == Facing.LEFT) {
+        } else if (this.direction == Facing.LEFT) {
           commandQueue.add(walkLeft);
         }
       } else if (a == Action.t_right) {
-        commandQueue.add(walkRight);
+        // convert facing to use a move command to change without moving
+        if (this.direction == Facing.UP) {
+          commandQueue.add(walkRight);
+        } else if (this.direction == Facing.RIGHT) {
+          commandQueue.add(walkDown);
+        } else if (this.direction == Facing.DOWN) {
+          commandQueue.add(walkLeft);
+        } else if (this.direction == Facing.LEFT) {
+          commandQueue.add(walkUp);
+        }
       } else if (a == Action.t_left) {
-        commandQueue.add(walkLeft);
+        // convert facing to use a move command to change without moving 
+        if (this.direction == Facing.UP) {
+          commandQueue.add(walkLeft);
+        } else if (this.direction == Facing.RIGHT) {
+          commandQueue.add(walkUp);
+        } else if (this.direction == Facing.DOWN) {
+          commandQueue.add(walkRight);
+        } else if (this.direction == Facing.LEFT) {
+          commandQueue.add(walkDown);
+        }
       } else if (a == Action.t_back) {
-        commandQueue.add(walkDown);
+        // convert facing to use a move command to change without moving
+        if (this.direction == Facing.UP) {
+          commandQueue.add(walkDown);
+        } else if (this.direction == Facing.RIGHT) {
+          commandQueue.add(walkLeft);
+        } else if (this.direction == Facing.DOWN) {
+          commandQueue.add(walkUp);
+        } else if (this.direction == Facing.LEFT) {
+          commandQueue.add(walkRight);
+        }
       } else if (a == Action.pickup) {
         commandQueue.add(pickup);
       } else if (a == Action.drop) {
