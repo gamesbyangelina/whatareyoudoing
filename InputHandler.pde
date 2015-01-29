@@ -41,14 +41,14 @@ class InputHandler {
    *
    * EDIT: Processing is a baw...
    */
-   /*
+  /*
   public static InputHandler getInstance() {
-    if (instance == null) {
-      return new InputHandler();
-    } else {
-      return instance;
-    }
-  } */
+   if (instance == null) {
+   return new InputHandler();
+   } else {
+   return instance;
+   }
+   } */
 
   private void initialSetup(PApplet sketch) {
     println("Attempting to acquire ControlIO Instance.");
@@ -69,7 +69,13 @@ class InputHandler {
      * library.
      */
     println("Attempting to acquire Xbox 360 controller.");
-    gamePad = control.getDevice(deviceName);
+    try {
+      gamePad = control.getDevice(deviceName);
+    }
+    catch(Exception e) {
+      println("Failed to acquire input device.");
+      gamePad = null;
+    }
   }
 
   private void resetInputState() {
@@ -79,29 +85,32 @@ class InputHandler {
 
   public void updateInput() {
 
-    resetInputState();
+    if (gamePad == null)
+    {
+      resetInputState();
+    } else {
+      /*Check all of the input buttons, see if they are currently pressed and
+       *set it to the appropriate value.
+       */
+      for (InputButtons buttonKey : InputButtons.values ()) {
+        ControlButton currentButton = gamePad.getButton(buttonKey.getIDNumber());
+        buttonPressed.put(buttonKey, currentButton.pressed());
+      }
 
-    /*Check all of the input buttons, see if they are currently pressed and
-     *set it to the appropriate value.
-     */
-    for (InputButtons buttonKey : InputButtons.values ()) {
-      ControlButton currentButton = gamePad.getButton(buttonKey.getIDNumber());
-      buttonPressed.put(buttonKey, currentButton.pressed());
-    }
+      /**
+       * Next, we check whether a stick has been moved over on a given axis and then
+       * whether it returned to the central point.
+       */
+      for (InputAxis inputAxis : InputAxis.values ()) {
+        ControlSlider currentAxis = gamePad.getSlider(inputAxis.getIDString());
 
-    /**
-     * Next, we check whether a stick has been moved over on a given axis and then
-     * whether it returned to the central point.
-     */
-    for (InputAxis inputAxis : InputAxis.values ()) {
-      ControlSlider currentAxis = gamePad.getSlider(inputAxis.getIDString());
+        float axisValue = currentAxis.getValue();
 
-      float axisValue = currentAxis.getValue();
-
-      if (axisValue >= joystickThreshold) {
-        joystickActive.put(inputAxis, axisValue);
-      } else if (axisValue < joystickDeadzone) {
-        joystickActive.put(inputAxis, 0.0);
+        if (axisValue >= joystickThreshold) {
+          joystickActive.put(inputAxis, axisValue);
+        } else if (axisValue < joystickDeadzone) {
+          joystickActive.put(inputAxis, 0.0);
+        }
       }
     }
   }
@@ -111,10 +120,16 @@ class InputHandler {
    * on the game pad is being pressed this frame.
    */
   public boolean buttonPressed(InputButtons button) {
-    if (buttonPressed.containsKey(button)) {
-      return buttonPressed.get(button);
+
+    if (gamePad != null) {
+
+      if (buttonPressed.containsKey(button)) {
+        return buttonPressed.get(button);
+      } else {
+        println("Button Press Request Failed - Button Not Recognised: "+button);
+        return false;
+      }
     } else {
-      println("Button Press Request Failed - Button Not Recognised: "+button);
       return false;
     }
   }
@@ -124,10 +139,15 @@ class InputHandler {
    * on the game pad is being pressed this frame.
    */
   public float axisValue(InputAxis axis) {
-    if (joystickActive.containsKey(axis)) {
-      return joystickActive.get(axis);
+
+    if (gamePad != null) {
+      if (joystickActive.containsKey(axis)) {
+        return joystickActive.get(axis);
+      } else {
+        println("Joystick Axis Request Failed - Axis Not Recognised: "+axis);
+        return 0.0;
+      }
     } else {
-      println("Joystick Axis Request Failed - Axis Not Recognised: "+axis);
       return 0.0;
     }
   }
