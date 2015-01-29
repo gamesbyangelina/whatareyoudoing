@@ -37,6 +37,15 @@ abstract class Agent
   }
 }
 
+class Enemy extends Agent
+{
+  public Enemy(int x, int y)
+  {
+    super(x, y);  
+  }
+}
+
+
 class Parent extends Agent
 {
   public Parent(int x, int y)

@@ -82,9 +82,12 @@ void draw()
 
   //draw the status bar
   fill(255);
-  String holdingString = "Holding: ";
+  String holdingString = "Parent is holding: ";
   holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
   text(holdingString, 10, gridSizeY*tileSize + 10);
+  holdingString = "Child is holding: ";
+  holdingString += (child.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
+  text(holdingString, 10, gridSizeY*tileSize + 30);
 
   parent.render();
   child.render();
@@ -131,7 +134,6 @@ void keyPressed()
     event.addAction(occurredAction);
   }
 
-  //todo: event is constructed at this point, but where do I send it??
   println(event);
   child.addEventToMemory(event);
 
