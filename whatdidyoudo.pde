@@ -1,6 +1,7 @@
 int gridSizeX = 25;
 int gridSizeY = 25;
 int tileSize = 20;
+int sidebarSizeX = 200;
 int borderSize = 1;
 int statusBarSize = 100;
 
@@ -19,24 +20,22 @@ Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
 void setup()
 {
-  size(gridSizeX*tileSize, gridSizeY*tileSize + statusBarSize);
+  size(gridSizeX*tileSize + sidebarSizeX, gridSizeY*tileSize + statusBarSize);
   
-  int xPos=0, yPos=0;
-  
-  do{
-    world = GenerateWorld(gridSizeX, gridSizeY, 3);
-    //Try ten times to find a good place in this world.
-    for(int i=0; i<10; i++){
-      do {
-        xPos = int(random(0, gridSizeX));
-        yPos = int(random(0, gridSizeY));
-      } while (world[xPos][yPos] != null);
-      if(VerifyWorldState(world, xPos, yPos))
-        break;
+  world = new TileType[gridSizeX][gridSizeY];
+  for (int i = 0; i < gridSizeX; i++) {
+    for (int j = 0; j < gridSizeY; j++) {
+      world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
     }
-  } //If we failed ten times, regenerate the world
-  while(!VerifyWorldState(world, xPos, yPos));
+  }
   
+  world = GenerateWorld(gridSizeX, gridSizeY, 3);
+  
+  int xPos, yPos;
+  do {
+    xPos = int(random(0, gridSizeX));
+    yPos = int(random(0, gridSizeY));
+  } while (world[xPos][yPos] != null);
   parent = new Parent(xPos, yPos);
   
   do {
@@ -121,7 +120,7 @@ void keyPressed()
   else if (key > '1' && key < '9') removeRuleRequest (key - '0');
   
   //add the action to the event
-  if (action != null) {
+  if (occurredAction != null) {
     event.addAction(occurredAction);
   }
   
@@ -131,5 +130,5 @@ void keyPressed()
 
 void removeRuleRequest (int which) {
   // more logic here to use resources etc
-  child.removeRule (which);
+  child.removeRuleFromMemory (child.gitRules(which));
 }
