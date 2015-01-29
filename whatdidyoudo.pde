@@ -25,7 +25,7 @@ color strawberryColor = color(34, 42, 85);
 color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
-boolean renderArt = false;
+boolean renderArt = true;
 PImage backdrop;
 
 boolean playSFX = true;
@@ -88,7 +88,7 @@ void setup()
   smooth();
   
   //Load in graphics
-  backdrop = loadImage("img/Backdrop3.png");
+  backdrop = loadImage("img/Backdrop2.png");
   
   //Set up the input handler.
   //inputHandler = InputHandler.getInstance();
@@ -132,6 +132,12 @@ void draw()
       }
       if(world[i][j] != null || !renderArt)
         rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      noFill();
+      stroke(50);
+      strokeWeight(1.75);
+      rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      strokeWeight(1);
+
       popMatrix();
     }
   }
