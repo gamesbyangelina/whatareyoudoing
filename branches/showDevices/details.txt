@@ -1,0 +1,248 @@
+##########################################################################################
+                   Game Control Plus  - available devices
+                   --------------------------------------
+  ========================================================================
+  NAME :     Mouse
+  Type :     Mouse
+  Port :     Unknown
+    Buttons (5)
+      Type     Name               Multiplier
+      button    Button 0            -
+      button    Button 1            -
+      button    Button 2            -
+      button    Button 3            -
+      button    Button 4            -
+    Sliders (3)
+      Type     Name               Multiplier     Tolerance
+      slider    X-axis              1.0            0.0            (relative)
+      slider    Y-axis              1.0            0.0            (relative)
+      slider    Wheel               1.0            0.0            (relative)
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Keyboard
+  Type :     Keyboard
+  Port :     Unknown
+    Buttons (126)
+      Type     Name               Multiplier
+      button    ESC                 -
+      button    1                   -
+      button    2                   -
+      button    3                   -
+      button    4                   -
+      button    5                   -
+      button    6                   -
+      button    7                   -
+      button    8                   -
+      button    9                   -
+      button    0                   -
+      button    -                   -
+      button    =                   -
+      button    BACKSPACE           -
+      button    TAB                 -
+      button    Q                   -
+      button    W                   -
+      button    E                   -
+      button    R                   -
+      button    T                   -
+      button    Y                   -
+      button    U                   -
+      button    I                   -
+      button    O                   -
+      button    P                   -
+      button    [                   -
+      button    ]                   -
+      button    ENTER               -
+      button    CTRL                -
+      button    A                   -
+      button    S                   -
+      button    D                   -
+      button    F                   -
+      button    G                   -
+      button    H                   -
+      button    J                   -
+      button    K                   -
+      button    L                   -
+      button    ;                   -
+      button    '                   -
+      button    `                   -
+      button    SHIFT               -
+      button    #                   -
+      button    Z                   -
+      button    X                   -
+      button    C                   -
+      button    V                   -
+      button    B                   -
+      button    N                   -
+      button    M                   -
+      button    ,                   -
+      button    .                   -
+      button    /                   -
+      button    RIGHT SHIFT         -
+      button    *                   -
+      button    ALT                 -
+      button    SPACE               -
+      button    CAPSLOCK            -
+      button    F1                  -
+      button    F2                  -
+      button    F3                  -
+      button    F4                  -
+      button    F5                  -
+      button    F6                  -
+      button    F7                  -
+      button    F8                  -
+      button    F9                  -
+      button    F10                 -
+      button    Num Lock            -
+      button    SCROLL LOCK         -
+      button    NUM 7               -
+      button    NUM 8               -
+      button    NUM 9               -
+      button    -                   -
+      button    NUM 4               -
+      button    NUM 5               -
+      button    NUM 6               -
+      button    +                   -
+      button    NUM 1               -
+      button    NUM 2               -
+      button    NUM 3               -
+      button    NUM 0               -
+      button    NUM DECIMAL         -
+      button    \                   -
+      button    F11                 -
+      button    F12                 -
+      button    Prev Track          -
+      button    Next Track          -
+      button    NUM ENTER           -
+      button    Right Ctrl          -
+      button    Mute                -
+      button    Calculator          -
+      button    Play/Pause          -
+      button    Media Stop          -
+      button    Volume -            -
+      button    Volume +            -
+      button    Web/Home            -
+      button    NUM DIVIDE          -
+      button    Prnt Scrn           -
+      button    RIGHT ALT           -
+      button    Pause               -
+      button    HOME                -
+      button    UP                  -
+      button    PGUP                -
+      button    LEFT                -
+      button    RIGHT               -
+      button    END                 -
+      button    DOWN                -
+      button    PGDOWN              -
+      button    INSERT              -
+      button    DELETE              -
+      button    Left Windows        -
+      button    Right Windows       -
+      button    Application         -
+      button    Power               -
+      button    Sleep               -
+      button    Wake                -
+      button    Search              -
+      button    Favorites           -
+      button    Refresh             -
+      button    Web Stop            -
+      button    Forward             -
+      button    Back                -
+      button    My Computer         -
+      button    Mail                -
+      button    Media               -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     SAM
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (31)
+      Type     Name               Multiplier
+      button    Button 0            -
+      button    Consumer Control    -
+      button    Numeric Key Pad     -
+      button    Button 3            -
+      button    Button 4            -
+      button    Button 5            -
+      button    Button 6            -
+      button    Button 7            -
+      button    Button 8            -
+      button    Button 9            -
+      button    Button 10           -
+      button    Button 11           -
+      button    Button 12           -
+      button    Button 13           -
+      button    Button 14           -
+      button    Button 15           -
+      button    Button 16           -
+      button    Button 17           -
+      button    Button 18           -
+      button    Button 19           -
+      button    Button 20           -
+      button    Button 21           -
+      button    Button 22           -
+      button    Button 23           -
+      button    Button 24           -
+      button    Button 25           -
+      button    Button 26           -
+      button    Button 27           -
+      button    Button 28           -
+      button    Button 29           -
+      button    Button 30           -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     SAM
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     SAM
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Controller (XBOX 360 For Windows)
+  Type :     Gamepad
+  Port :     Unknown
+    Buttons (11)
+      Type     Name               Multiplier
+      button    Button 0            -
+      button    Button 1            -
+      button    Button 2            -
+      button    Button 3            -
+      button    Button 4            -
+      button    Button 5            -
+      button    Button 6            -
+      button    Button 7            -
+      button    Button 8            -
+      button    Button 9            -
+      hat       Hat Switch          1.0            
+    Sliders (5)
+      Type     Name               Multiplier     Tolerance
+      slider    Y Axis              1.0            0.0            absolute
+      slider    X Axis              1.0            0.0            absolute
+      slider    Y Rotation          1.0            0.0            absolute
+      slider    X Rotation          1.0            0.0            absolute
+      slider    Z Axis              1.0            0.0            absolute
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     SAM
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     MICROSOFT
+  Type :     Unknown
+  Port :     Unknown
+    Buttons (3)
+      Type     Name               Multiplier
+      button    Volume Decrement    -
+      button    Volume Increment    -
+      button    Mute                -
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+  ========================================================================
+  NAME :     Atmel maXTouch Control
+  Type :     Unknown
+  Port :     Unknown
+  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##########################################################################################
+
