@@ -1,7 +1,6 @@
 int gridSizeX = 25;
 int gridSizeY = 25;
 int tileSize = 20;
-int sidebarSizeX = 200;
 int borderSize = 1;
 int statusBarSize = 100;
 
@@ -20,14 +19,7 @@ Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
 void setup()
 {
-  size(gridSizeX*tileSize + sidebarSizeX, gridSizeY*tileSize + statusBarSize);
-  
-  world = new TileType[gridSizeX][gridSizeY];
-  for (int i = 0; i < gridSizeX; i++) {
-    for (int j = 0; j < gridSizeY; j++) {
-      world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
-    }
-  }
+  size(gridSizeX*tileSize, gridSizeY*tileSize + statusBarSize);
   
   world = GenerateWorld(gridSizeX, gridSizeY, 3);
   
