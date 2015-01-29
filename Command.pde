@@ -29,34 +29,54 @@ class PickupCommand extends Command
 
 class DropCommand extends Command
 {
+  boolean failedToDrop;
+  
   void execute(Agent actor) {
     PVector dir = actor.getFacingDirection();
-    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y)) //the tile the player is facing is in world bounds
-            && actor.inventory == TileType.STONE) //the actor is holding a stone
-    {
-      actor.inventory = null;
-      world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
+    failedToDrop = false;
+    if (inBounds(actor.xPos + int(dir.x), actor.yPos + int(dir.y))){ //the tile the player is facing is in world bounds
+        //case: stone + river -> ground
+       if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.RIVER){
+           actor.inventory = null;
+           world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;
+       }
+        //case: stone + ground -> stone
+       else if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == null){
+           actor.inventory = null;
+           world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = TileType.STONE;
+       }
+       //case: stone + stone -> <invalid>
+       //todo: this should NOT end the turn
+       else if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STONE){
+           failedToDrop = true;
+       }
     }
   }
   
-  Action getKind() { return Action.drop; }
+  Action getKind() { return (failedToDrop) ? null : Action.drop; }
 }
 
 abstract class WalkCommand extends Command
 {
   boolean changedDirection;
+  boolean collided;
   
   void execute(Agent actor) {
     boolean isFacing = checkIfFacing(actor);
+    collided = false;
     if (isFacing) {
       updatePosition(actor);
-      resolveCollision(actor);
+      collided = resolveCollision(actor);
     }
     changedDirection = !isFacing;
   }  
   
-  void resolveCollision(Agent actor) {
-    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) rollBackPosition(actor);
+  boolean resolveCollision(Agent actor) {
+    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) {
+      rollBackPosition(actor);
+      return true;
+    }
+    return false;
   }
   
   abstract boolean checkIfFacing(Agent actor);
@@ -74,7 +94,7 @@ class WalkLeftCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos -= 1; }
   void rollBackPosition(Agent actor) { actor.xPos += 1; } 
-  Action getKind() { return (changedDirection) ? Action.f_left : Action.m_left; }
+  Action getKind() { return (collided) ? null : ((changedDirection) ? Action.f_left : Action.m_left); }
 }
 
 class WalkRightCommand extends WalkCommand
@@ -87,7 +107,7 @@ class WalkRightCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.xPos += 1; }
   void rollBackPosition(Agent actor) { actor.xPos -= 1; }
-  Action getKind() { return (changedDirection) ? Action.f_right : Action.m_right; }
+  Action getKind() { return (collided) ? null : ((changedDirection) ? Action.f_right : Action.m_right); }
 }
 
 class WalkUpCommand extends WalkCommand
@@ -100,7 +120,7 @@ class WalkUpCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos -= 1; }
   void rollBackPosition(Agent actor) { actor.yPos += 1; }
-  Action getKind() { return (changedDirection) ? Action.f_up : Action.m_up; }
+  Action getKind() { return (collided) ? null : ((changedDirection) ? Action.f_up : Action.m_up); }
 }
 
 class WalkDownCommand extends WalkCommand
@@ -113,5 +133,5 @@ class WalkDownCommand extends WalkCommand
   
   void updatePosition(Agent actor)   { actor.yPos += 1; }
   void rollBackPosition(Agent actor) { actor.yPos -= 1; }
-  Action getKind() { return (changedDirection) ? Action.f_down : Action.m_down; }
+  Action getKind() { return (collided) ? null : ((changedDirection) ? Action.f_down : Action.m_down); }
 }
