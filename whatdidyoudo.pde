@@ -52,10 +52,17 @@ void setup()
   smooth();
 }
 
+void update()
+{
+  //execute the next command in the child's queue
+  child.executeNextCommand();
+}
 
 void draw()
 {
   background(0);
+  
+  update();
   
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
