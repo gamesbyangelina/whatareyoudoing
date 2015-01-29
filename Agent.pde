@@ -134,11 +134,24 @@ class Child extends Agent
   
   public void addEventToMemory(Event e) 
   {
+    //If this action type is not in our recent memory, be interested!
+    if(newActionType(e) && int(random(10)) < 3 && (e.action == Action.drop)){
+         sfx_understanding.rewind();
+         sfx_understanding.play();   
+    }
     eventMemory.add(e);
     if (eventMemory.size () > memorylimit) {
       // forget the earliest event
       eventMemory.remove (0);
     }
+  }
+  
+  public boolean newActionType(Event ev){
+     for(Event e : eventMemory){
+        if(e.action == ev.action)
+            return false;
+     } 
+     return true;
   }
   
   public void addRuleToMemory(Rule r) 
@@ -225,6 +238,12 @@ class Child extends Agent
         commandQueue.add(pickup);
       } else if (a == Action.drop) {
         commandQueue.add(drop);
+        /*
+        if(childIsCarryingSomething()){
+          sfx_whee.rewind();
+          sfx_whee.play();
+        }
+        */
       }
     } else {
       Command follow = moveTowardAgent(parent, minSeparation);
