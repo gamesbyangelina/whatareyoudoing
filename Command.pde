@@ -39,6 +39,7 @@ class DropCommand extends Command
        if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.RIVER){
            actor.inventory = null;
            world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;
+           sfx_splash.play();
        }
         //case: stone + ground -> stone
        else if(world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == null){
