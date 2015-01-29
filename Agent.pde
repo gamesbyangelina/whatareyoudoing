@@ -36,6 +36,35 @@ abstract class Agent
     return new PVector(xDir, yDir);
   }
   
+  public Command moveTowardAgent(Agent a, int minSeparation)
+  {
+    int xDist = a.xPos - this.xPos;
+    int yDist = a.yPos - this.yPos;
+    
+    Command returnCommand = null;
+    if (Math.abs(xDist) + Math.abs(yDist) < minSeparation) {
+      return returnCommand;
+    }
+    
+    if (Math.abs(xDist) > Math.abs(yDist)) {
+      // further on x-axis -> move on x-axis
+      if (xDist > 0) {
+        returnCommand = walkRight;
+      } else {
+        returnCommand = walkLeft;
+      }
+    } else {
+      // further on y-axis -> move on y-axis
+      if (yDist > 0) {
+        returnCommand = walkDown;
+      } else {
+        returnCommand = walkUp;
+      }
+    }
+    
+    return returnCommand;  
+  }
+  
 }
 
 class Enemy extends Agent
@@ -48,7 +77,7 @@ class Enemy extends Agent
   
   public void act()
   {
-      
+      //pick the closest child and move towards it
   }
 }
 
@@ -102,44 +131,6 @@ class Child extends Agent
     isLearning = true;
   }
   
-  public Command moveTowardParent(int pX, int pY, int cX, int cY) {
-    int xDist = pX - cX;
-    int yDist = pY - cY;
-    
-    Command returnCommand = null;
-    if (Math.abs(xDist) + Math.abs(yDist) < minSeparation) {
-      return returnCommand;
-    }
-    
-    if (Math.abs(xDist) > Math.abs(yDist)) {
-      println("x distance larger");
-      // further on x-axis -> move on x-axis
-      if (xDist > 0) {
-        // parent further right than child
-        println("child walking right");
-        returnCommand = walkRight;
-      } else {
-        // parent further left than child
-        println("child walking left");
-        returnCommand = walkLeft;
-      }
-    } else {
-      println("y distance larger");
-      // further on y-axis -> move on y-axis
-      if (yDist > 0) {
-        // parent above child
-        println("child walking up");
-        returnCommand = walkDown;
-      } else {
-        // parent below child
-        println("child walking down");
-        returnCommand = walkUp;
-      }
-    }
-    
-    return returnCommand;
-  }
-  
   public void addEventToMemory(Event e) 
   {
     eventMemory.add(e);
@@ -178,7 +169,7 @@ class Child extends Agent
     commandQueue.addAll(c);
   }
   
-  public void executeNextCommand(List<Condition> state, Parent p)
+  public void executeNextCommand(List<Condition> state)
   {
     println("child is executing!");
     ArrayList<Action> nextActions = (ArrayList<Action>)gitActionSet(rules, state);
@@ -199,7 +190,7 @@ class Child extends Agent
         commandQueue.add(drop);
       }
     } else {
-      Command follow = moveTowardParent(p.xPos, p.yPos, this.xPos, this.yPos);
+      Command follow = moveTowardAgent(parent, minSeparation);
       if (follow != null) {
         println("child moving toward parent!");
         commandQueue.add(follow);

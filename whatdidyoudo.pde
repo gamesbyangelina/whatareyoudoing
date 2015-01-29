@@ -198,7 +198,7 @@ void handleInput()
 
     ArrayList<Condition> childConditions = checkConditions(child);
     //execute the next command in the child's queue
-    child.executeNextCommand(childConditions, parent);
+    child.executeNextCommand(childConditions);
     child.learn();
   }
   
@@ -236,7 +236,7 @@ void keyPressed()
   for (Child child : children) {
     ArrayList<Condition> childConditions = checkConditions(child);
     //execute the next command in the child's queue
-    child.executeNextCommand(childConditions, parent);
+    child.executeNextCommand(childConditions);
     child.learn();
   }
   
