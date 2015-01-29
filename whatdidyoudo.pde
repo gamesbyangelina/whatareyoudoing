@@ -21,13 +21,22 @@ void setup()
 {
   size(gridSizeX*tileSize, gridSizeY*tileSize + statusBarSize);
   
-  world = GenerateWorld(gridSizeX, gridSizeY, 3);
+  int xPos=0, yPos=0;
   
-  int xPos, yPos;
-  do {
-    xPos = int(random(0, gridSizeX));
-    yPos = int(random(0, gridSizeY));
-  } while (world[xPos][yPos] != null);
+  do{
+    world = GenerateWorld(gridSizeX, gridSizeY, 3);
+    //Try ten times to find a good place in this world.
+    for(int i=0; i<10; i++){
+      do {
+        xPos = int(random(0, gridSizeX));
+        yPos = int(random(0, gridSizeY));
+      } while (world[xPos][yPos] != null);
+      if(VerifyWorldState(world, xPos, yPos))
+        break;
+    }
+  } //If we failed ten times, regenerate the world
+  while(!VerifyWorldState(world, xPos, yPos));
+  
   parent = new Parent(xPos, yPos);
   
   do {
