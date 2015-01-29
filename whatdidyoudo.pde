@@ -8,6 +8,7 @@ TileType[][] world;
 color groundColor = color(183, 72, 72);
 color riverColor = color(44, 245, 240);
 color stoneColor = color(198, 192, 192);
+color textColor = color (0, 0, 0);
 
 color ERROR_COLOR = color(252, 10, 252); 
 
@@ -52,18 +53,10 @@ void setup()
   smooth();
 }
 
-void update()
-{
-  //execute the next command in the child's queue
-//  child.executeNextCommand();
-//  child.learn();
-}
 
 void draw()
 {
   background(0);
-  
-  update();
   
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
@@ -82,6 +75,18 @@ void draw()
       }
       rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
       popMatrix();  
+    }
+    
+    // draw the current set of rules
+    List<Rule> childRules = null;//child.gitRules ();
+    final int xOffset = gridSizeX * tileSize + tileSize;
+    final int yOffset = 0;
+    i = 1;
+    final int linewidth = 30;
+    textFont(createFont("Arial",16,true));
+    fill (textColor);
+    for (Rule rule : childRules) {
+      text(i+" "+rule.toString(),xOffset,yOffset+i*linewidth);      
     }
   }
   
@@ -110,10 +115,13 @@ void keyPressed()
   else if (keyCode == DOWN) occurredAction = walkDown.perform(parent);
   else if (key == 'p') occurredAction = pickup.perform(parent);
   else if (key == 'd') occurredAction = drop.perform(parent);
-  else if (key == 'r') setup();
+  // now, the numbers that refer to rules
+  else if (key > '1' && key < '9') removeRuleRequest (key - '0');
   
   //add the action to the event
-  event.addAction(occurredAction);
+  if (occurredAction != null) {
+    event.addAction(occurredAction);
+  }
   
   //todo: event is constructed at this point, but where do I send it??
   println(event);
@@ -123,4 +131,9 @@ void keyPressed()
   //execute the next command in the child's queue
   child.executeNextCommand(childConditions);
   child.learn();
+}
+
+void removeRuleRequest (int which) {
+  // more logic here to use resources etc
+  child.removeRuleFromMemory (child.gitRules(which));
 }
