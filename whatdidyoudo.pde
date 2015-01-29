@@ -92,7 +92,7 @@ void setup()
 void draw()
 {
   background(0);
-  handleInput();
+//  handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
