@@ -98,6 +98,10 @@ class Child extends Agent
     rules.add(r);
   }
   
+  public LinkedList<Rule> gitRules() {
+    return rules;
+  }
+  
   public void addCommandToQueue(Command c)
   {
     commandQueue.add(c);
