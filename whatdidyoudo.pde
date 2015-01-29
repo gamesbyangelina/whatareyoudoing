@@ -11,6 +11,8 @@ int tileSize = 20;
 int sidebarSizeX = 300;
 int borderSize = 1;
 int statusBarSize = 100;
+int turn = 0;
+final int memorylimit = 20;
 
 TileType[][] world;
 color groundColor = color(183, 72, 72);
@@ -155,6 +157,8 @@ void keyPressed()
   //execute the next command in the child's queue
   child.executeNextCommand(childConditions);
   child.learn();
+  
+  turn++;
 }
 
 void removeRuleRequest (int which) {

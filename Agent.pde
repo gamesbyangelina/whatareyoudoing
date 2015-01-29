@@ -167,7 +167,8 @@ class Child extends Agent
     }
     
     // learn only when memory increases
-    if (eventMemory.size() % learnFrequency == 0) {
+    if (turn % learnFrequency == 0) { 
+    //if (eventMemory.size() % learnFrequency == 0) {
       println("child is learning!");
       // re-learn rules, obliterating old knowledge
       rules = (List<Rule>)simpleLearn(eventMemory);
