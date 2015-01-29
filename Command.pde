@@ -63,8 +63,8 @@ abstract class WalkCommand extends Command
   Facing previousDirection;
   
   void execute(Agent actor) {
-    boolean isFacing = checkIfFacing(actor);
     previousDirection = actor.direction;
+    boolean isFacing = checkIfFacing(actor);
     collided = false;
     if (isFacing) {
       updatePosition(actor);
@@ -119,6 +119,7 @@ class WalkRightCommand extends WalkCommand
   void updatePosition(Agent actor)   { actor.xPos += 1; }
   void rollBackPosition(Agent actor) { actor.xPos -= 1; }
   Action getKind() { 
+    println("previous direction: " + previousDirection);
     if (collided) return null;
     else if (!changedDirection) return Action.move;
     else {
