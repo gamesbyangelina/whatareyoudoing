@@ -69,8 +69,10 @@ class Child extends Agent
   
   public void executeNextCommand()
   {
-    Action a = commandQueue.remove().perform(this);
-    println("child just: " + a);
+    if (hasCommandsInQueue()) {
+      Action a = commandQueue.remove().perform(this);
+      println("child just: " + a);
+    }
   }
   
   public boolean hasCommandsInQueue()
