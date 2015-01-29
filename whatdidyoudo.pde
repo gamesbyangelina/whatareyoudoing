@@ -53,22 +53,18 @@ void setup()
 {
   size(gridSizeX*tileSize+sidebarSizeX, gridSizeY*tileSize + statusBarSize);
 
-  world = new TileType[gridSizeX][gridSizeY];
-  for (int i = 0; i < gridSizeX; i++) {
-    for (int j = 0; j < gridSizeY; j++) {
-      world[i][j] = (random(1) < 0.1) ? TileType.RIVER : null;
-    }
-  }
-
-  world = GenerateWorld(gridSizeX, gridSizeY, 2);
-
   int xPos, yPos;
-  do {
-    xPos = int(random(0, gridSizeX));
-    yPos = int(random(0, gridSizeY));
-  } 
-  while (world[xPos][yPos] != null);
-  parent = new Parent(xPos, yPos);
+  do{
+    world = GenerateWorld(gridSizeX, gridSizeY, 2);
+    do {
+      xPos = int(random(0, gridSizeX));
+      yPos = int(random(0, gridSizeY));
+    } 
+    while (world[xPos][yPos] != null);
+      parent = new Parent(xPos, yPos);
+  }
+  while(!VerifyWorldState(world, xPos, yPos));
+ 
 
   children = new ArrayList<Child>();
   for (int i = 0; i < numChildren; i++)
