@@ -67,6 +67,8 @@ class Child extends Agent
   
   private Random rng = new Random();
   
+  final int memorylimit = 20;
+  
   public Child(int x, int y)
   {
     super(x, y);
@@ -95,6 +97,10 @@ class Child extends Agent
   public void addEventToMemory(Event e) 
   {
     eventMemory.add(e);
+    if (eventMemory.size () > memoryLimit) {
+      // forget the earliest event
+      eventMemory.remove (0);
+    }
   }
   
   public void addRuleToMemory(Rule r) 
