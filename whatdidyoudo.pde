@@ -41,8 +41,6 @@ void setup()
 
   world = GenerateWorld(gridSizeX, gridSizeY, 3);
 
-
-
   int xPos, yPos;
   do {
     xPos = int(random(0, gridSizeX));
@@ -110,7 +108,7 @@ void draw()
   // draw the current set of rules
   List<Rule> childRules = child.gitRules ();
   //List<Rule> childRules = testRules;
-  println (childRules.size ());
+//  println (childRules.size ());
   final int xOffset = gridSizeX * tileSize + tileSize;
   final int yOffset = 0;
   int line = 1;
@@ -154,7 +152,7 @@ void keyPressed()
 
   ArrayList<Condition> childConditions = checkConditions(child);
   //execute the next command in the child's queue
-  child.executeNextCommand(childConditions);
+  child.executeNextCommand(childConditions, parent);
   child.learn();
   
   turn++;

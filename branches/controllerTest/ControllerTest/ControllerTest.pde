@@ -85,6 +85,7 @@ void draw() {
   /**
    * Finally, we check the values of the X and Y sliders on both analog sticks.
    */
+  
   leftSliderX = device.getSlider("X Axis");
   leftSliderY = device.getSlider("Y Axis");
   println("Left Stick Position: ("+leftSliderX.getValue()+","+leftSliderY.getValue()+")");
