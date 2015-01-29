@@ -109,7 +109,7 @@ void draw()
   if(renderArt)
     image(backdrop, -20, -120, tileSize*gridSizeX+40, tileSize*gridSizeY+120);
   
-  handleInput();
+  // handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
