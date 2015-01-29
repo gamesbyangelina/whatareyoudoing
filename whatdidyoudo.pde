@@ -17,6 +17,8 @@ int borderSize = 1;
 int statusBarSize = 100;
 int turn = 0;
 
+boolean gameOver = false;
+
 TileType[][] world;
 color groundColor = color(183, 72, 72);
 color riverColor = color(44, 245, 240);
@@ -264,6 +266,10 @@ void keyPressed()
     child.learn();
   }
   turn++;
+  
+  if (gameOver) {
+    // TODO    
+  }
 }
 
 void removeRuleRequest(int which) {

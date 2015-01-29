@@ -135,7 +135,7 @@ class Child extends Agent
   public void addEventToMemory(Event e) 
   {
     //If this action type is not in our recent memory, be interested!
-    if(newActionType(e) && int(random(10)) < 3 && (e.action == Action.drop)){
+    if(playSFX && newActionType(e) && int(random(10)) < 3 && (e.action == Action.drop)){
          sfx_understanding.rewind();
          sfx_understanding.play();   
     }
@@ -166,9 +166,7 @@ class Child extends Agent
   
   public void removeRuleFromMemory(Rule r) 
   {
-    print ("Trying to remove " + r + " ");
-    boolean works = rules.remove(r);
-    println (works);
+    rules.add(r);
   }
   
   public List<Rule> gitRules() {
@@ -187,7 +185,7 @@ class Child extends Agent
   
   public void executeNextCommand(List<Condition> state)
   {
-    println("child is executing!");
+//    println("child is executing!");
     ArrayList<Action> nextActions = (ArrayList<Action>)gitActionSet(rules, state);
     if (nextActions.size() > 0) {
       Action a = nextActions.get(rng.nextInt(nextActions.size()));
@@ -250,7 +248,7 @@ class Child extends Agent
     } else {
       Command follow = moveTowardAgent(parent, minSeparation);
       if (follow != null) {
-        println("child moving toward parent!");
+//        println("child moving toward parent!");
         commandQueue.add(follow);
       }
     }
@@ -282,7 +280,7 @@ class Child extends Agent
       
       rules = (List<Rule>)simpleLearn(eventMemory);
       
-      if(rules.size() != memory_before){
+      if(rules.size() != memory_before && playSFX){
           //Play a sound
           int sfx = int(random(4));
           sfx_learnNewRule.get(sfx).rewind();
