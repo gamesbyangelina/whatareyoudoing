@@ -94,16 +94,17 @@ void draw()
   // draw the current set of rules
   //List<Rule> childRules = child.gitRules ();
   List<Rule> childRules = testRules;
-  println (childRules.size ());
+  println ("Num: child rules = "+childRules.size ());
   final int xOffset = gridSizeX * tileSize + tileSize;
   final int yOffset = 0;
   int line = 1;
-  final int linewidth = 30;
+  final int linewidth = tileSize*3 + tileSize/2;
   textFont(createFont("Arial", 14, true));
   fill (textColor);
   for (Rule rule : childRules) {
+    rule.draw(xOffset, yOffset+line*linewidth);
     String text = line+" "+rule.toString();  
-    text(text, xOffset, yOffset+line*linewidth);  
+    //text(text, xOffset, yOffset+line*linewidth);  
     println (text);
     line++;
   }
