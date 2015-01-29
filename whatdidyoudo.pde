@@ -16,8 +16,7 @@ int sidebarSizeX = 300;
 int borderSize = 1;
 int statusBarSize = 100;
 int turn = 0;
-
-boolean gameOver = false;
+int energy = 2;
 
 TileType[][] world;
 color groundColor = color(183, 72, 72);
@@ -249,7 +248,7 @@ void keyPressed()
   else if (key == 'd') occurredAction = drop.perform(parent);
   else if (key == 'r') setup();
   // now, the numbers that refer to rules
-  else if (key > '1' && key < '9') removeRuleRequest(key - '0');
+  else if (key >= '1' && key < '9') removeRuleRequest(key - '0');
 
   //add the action to the event
   if (occurredAction != null) {
@@ -266,10 +265,6 @@ void keyPressed()
     child.learn();
   }
   turn++;
-  
-  if (gameOver) {
-    // TODO    
-  }
 }
 
 void removeRuleRequest(int which) {
