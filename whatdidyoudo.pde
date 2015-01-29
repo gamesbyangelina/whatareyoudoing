@@ -53,10 +53,17 @@ void setup()
   smooth();
 }
 
+void update()
+{
+  //execute the next command in the child's queue
+  child.executeNextCommand();
+}
 
 void draw()
 {
   background(0);
+  
+  update();
   
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
@@ -105,6 +112,7 @@ void keyPressed()
   else if (keyCode == DOWN) occurredAction = walkDown.perform(parent);
   else if (key == 'p') occurredAction = pickup.perform(parent);
   else if (key == 'd') occurredAction = drop.perform(parent);
+  else if (key == 'r') setup();
   
   //add the action to the event
   event.addAction(occurredAction);
