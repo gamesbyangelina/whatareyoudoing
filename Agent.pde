@@ -42,10 +42,15 @@ class Enemy extends Agent
 {
   public Enemy(int x, int y)
   {
-    super(x, y);  
+    super(x, y); 
+    renderColor = color(250, 230, 50); 
+  }
+  
+  public void act()
+  {
+    
   }
 }
-
 
 class Parent extends Agent
 {
