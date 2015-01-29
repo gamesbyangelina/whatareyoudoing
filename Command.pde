@@ -22,8 +22,8 @@ class PickupCommand extends Command
         actor.inventory = TileType.STONE;          //the tile is a stone
         world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;  
       }
-      else if (world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.APPLE) {
-        actor.inventory = TileType.APPLE;          //the tile is a stone
+      else if (world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] == TileType.STRAWBERRY) {
+        actor.inventory = TileType.STRAWBERRY;          //the tile is a stone
         world[actor.xPos + int(dir.x)][actor.yPos + int(dir.y)] = null;            
       }
      

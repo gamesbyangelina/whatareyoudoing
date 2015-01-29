@@ -1,6 +1,6 @@
 enum TileType {
   RIVER, 
   STONE,
-  APPLE
+  STRAWBERRY
 };
 
