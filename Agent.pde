@@ -255,10 +255,20 @@ class Child extends Agent
     // learn only when memory increases
     if (turn % learnFrequency == 0) { 
     //if (eventMemory.size() % learnFrequency == 0) {
-      println("child is learning!");
+      //println("child is learning!");
       // re-learn rules, obliterating old knowledge
+      int memory_before = rules.size();
+      
       rules = (List<Rule>)simpleLearn(eventMemory);
-      println("child memory size: " + eventMemory.size() + " | # rules: " + rules.size());
+      
+      if(rules.size() != memory_before){
+          //Play a sound
+          int sfx = int(random(4));
+          sfx_learnNewRule.get(sfx).rewind();
+          sfx_learnNewRule.get(sfx).play(); 
+      }
+      
+      //println("child memory size: " + eventMemory.size() + " | # rules: " + rules.size());
     }
   }
   

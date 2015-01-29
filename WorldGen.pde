@@ -49,7 +49,7 @@ TileType[][] GenerateWorld(int tiles_wide, int tiles_high, int num_rivers) {
 
 
   for (int i=0; i<num_rivers; i++) {
-    if (random(1) < 0)
+    if (random(1) < 0.6)
       RunRiverNaive(res, (int)random(tiles_wide));
     else {
       RunRiverPerlin(res, heightmap, int(random(tiles_wide)));
@@ -84,7 +84,7 @@ void RunRiverPerlin(TileType[][] map, float[][] hmap, int x) {
   float lowest_point = 1.0f; 
   int lx = 0; 
   int ly = 0;
-  while (rlength < 100 && ry <= map[0].length-2) {
+  while (rlength < 40 && ry <= map[0].length-2) {
     lowest_point = 1.0f;
     lx = 0; 
     ly = 0;

@@ -25,14 +25,21 @@ color strawberryColor = color(34, 42, 85);
 color textColor = color (255, 255, 255);
 color ERROR_COLOR = color(252, 10, 252); 
 
+boolean renderArt = false;
+PImage backdrop;
+
+boolean playSFX = true;
+Minim minim;
+AudioPlayer sfx_splash;
+ArrayList<AudioPlayer> sfx_learnNewRule = new ArrayList<AudioPlayer>();
+
 Parent parent;
 ArrayList<Child> children;
 int numChildren = 2;
 
 InputHandler inputHandler;
 
-Minim minim;
-AudioPlayer sfx_splash;
+
 
 Command walkLeft, walkRight, walkUp, walkDown, pickup, drop;
 
@@ -47,7 +54,7 @@ void setup()
     }
   }
 
-  world = GenerateWorld(gridSizeX, gridSizeY, 3);
+  world = GenerateWorld(gridSizeX, gridSizeY, 2);
 
   int xPos, yPos;
   do {
@@ -78,6 +85,8 @@ void setup()
 
   smooth();
   
+  //Load in graphics
+  backdrop = loadImage("img/Backdrop3.png");
   
   //Set up the input handler.
   //inputHandler = InputHandler.getInstance();
@@ -85,14 +94,22 @@ void setup()
   
   //Load the audio stuff
   minim = new Minim(this);
-  sfx_splash = minim.loadFile("splash.wav");
+  sfx_splash = minim.loadFile("assets/splash.wav");
+  sfx_learnNewRule.add(minim.loadFile("assets/newrule1.mp3"));
+  sfx_learnNewRule.add(minim.loadFile("assets/newrule2.mp3"));
+  sfx_learnNewRule.add(minim.loadFile("assets/newrule3.mp3"));
+  sfx_learnNewRule.add(minim.loadFile("assets/newrule4.mp3"));
 }
 
 
 void draw()
 {
   background(0);
-//  handleInput();
+  
+  if(renderArt)
+    image(backdrop, 0, 0, tileSize*gridSizeX, tileSize*gridSizeY);
+  
+  // handleInput();
 
   //draw the base tile grid
   for (int i = 0; i < gridSizeX; i++) {
@@ -109,7 +126,8 @@ void draw()
       } else {
         fill(groundColor);
       }
-      rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
+      if(world[i][j] != null || !renderArt)
+        rect(borderSize, borderSize, tileSize - 2*borderSize, tileSize - 2*borderSize);
       popMatrix();
     }
   }
