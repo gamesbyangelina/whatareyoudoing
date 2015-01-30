@@ -22,6 +22,8 @@ boolean gameOver = false;
 PImage strawberryImg;
 PImage stoneImg;
 PImage puddleImg;
+PImage parentImg;
+PImage childImg;
 
 
 TileType[][] world;
@@ -115,6 +117,8 @@ void setup()
   strawberryImg = loadImage("img/Strawberry.png");
   stoneImg = loadImage("img/Rock2.png");
  // puddleImg = loadImage("img/Strawberry.png");
+ parentImg = loadImage("img/R_Shrubs_Right.png");
+ childImg = loadImage("img/Y_Shrubs_Right.png");
   
   
 }
@@ -178,15 +182,16 @@ void draw()
   List<Rule> childRules = children.get(0).gitRules();
   //List<Rule> childRules = testRules;
 //  println (childRules.size ());
-  final int xOffset = gridSizeX * tileSize + tileSize;
-  final int yOffset = 0;
-  int line = 1;
+
   final int linewidth = tileSize*3 + tileSize/2;
+  final int xOffset = gridSizeX * tileSize + tileSize;
+  final int yOffset = linewidth/2;
+  int line = 1;
   textFont(createFont("Arial", 14, true));
   fill (textColor);
   for (Rule rule : childRules) {
     rule.draw(xOffset, yOffset+line*linewidth);
-    text(""+line, xOffset, yOffset+line*linewidth);
+    text(""+line, xOffset - linewidth/4, yOffset+line*linewidth);
     //text(text, xOffset, yOffset+line*linewidth);  
     line++;
   }

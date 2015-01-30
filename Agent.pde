@@ -4,6 +4,7 @@ abstract class Agent
   public Facing direction;
   public TileType inventory;
   color renderColor;
+  PImage agentImage;
   
   public Agent(int x, int y) {
     xPos = x;
@@ -15,10 +16,12 @@ abstract class Agent
   public void render()
   {
     noStroke();
-    fill(renderColor);
+    //fill(renderColor);
     rect(xPos*tileSize + borderSize*2, yPos*tileSize + borderSize*2, 
           tileSize - borderSize*4, tileSize - borderSize*4);
-    fill(255);
+    //fill(255);
+    image (agentImage, xPos*tileSize, yPos*tileSize, tileSize, tileSize);
+    
     if (direction == Facing.UP) 
       ellipse(xPos*tileSize + tileSize/2, yPos*tileSize + borderSize*4, 2, 2);
     else if (direction == Facing.RIGHT) 
@@ -88,6 +91,7 @@ class Parent extends Agent
   {
     super(x, y);
     renderColor = color(77, 35, 219);
+    agentImage = loadImage("img/R_Shrubs_Right.png");// parentImg;
   }
 }
 
@@ -107,6 +111,8 @@ class Child extends Agent
 
   final int memorylimit = 20;
   
+ 
+  
   public Child(int x, int y)
   {
     super(x, y);
@@ -116,6 +122,7 @@ class Child extends Agent
     rules = new LinkedList<Rule>();
     learnFrequency = 5;
     isLearning = true;
+    agentImage = loadImage("img/Y_Shrubs_Right.png");  // parentImg;
   }
   
   public Child(int x, int y, int learnFreq)
