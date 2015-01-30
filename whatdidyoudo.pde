@@ -12,11 +12,17 @@ import ddf.minim.effects.*;
 int gridSizeX = 15;
 int gridSizeY = 15;
 int tileSize = 40;
-int sidebarSizeX = 300;
+int sidebarSizeX = 400;
 int borderSize = 1;
 int statusBarSize = 100;
 int turn = 0;
 int energy = 2;
+boolean gameOver = false;
+
+PImage strawberryImg;
+PImage stoneImg;
+PImage puddleImg;
+
 
 TileType[][] world;
 color groundColor = color(183, 72, 72);
@@ -105,6 +111,12 @@ void setup()
   sfx_understanding = minim.loadFile("assets/ohh.mp3");
   sfx_whee = minim.loadFile("assets/wee.mp3");
   sfx_cutthatout = minim.loadFile("assets/cutthatout.mp3");
+  
+  strawberryImg = loadImage("img/Strawberry.png");
+  stoneImg = loadImage("img/Rock2.png");
+ // puddleImg = loadImage("img/Strawberry.png");
+  
+  
 }
 
 
@@ -124,11 +136,14 @@ void draw()
       translate(i*tileSize, j*tileSize);
       noStroke();
       if (world[i][j] == TileType.RIVER) {
+        //image(puddleImg,0,0,tileSize,tileSize);
         fill(riverColor);
       } else if (world[i][j] == TileType.STONE) {
-        fill(stoneColor);
+        image(stoneImg,0,0,tileSize,tileSize);
+        //fill(stoneColor);
       } else if (world[i][j] == TileType.STRAWBERRY) {
-        fill(strawberryColor);
+        image(strawberryImg,0,0,tileSize,tileSize);
+        //fill(strawberryColor);
       } else {
         fill(groundColor);
       }
@@ -152,7 +167,7 @@ void draw()
   for (int i = 0; i < numChildren; i++)
   {
     holdingString = "Child " + str(i+1) + " is holding: ";
-    holdingString += (children.get(i).inventory != null && children.get(i).inventory == TileType.STONE) ? "a stone!" : "nothing";
+    ///holdingString += (children.get(i).inventory != null && children.get(i).inventory == TileType.STONE) ? "a stone!" : "nothing";
     text(holdingString, 10, gridSizeY*tileSize + 50 + i*25);
   }
 

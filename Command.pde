@@ -88,26 +88,28 @@ abstract class WalkCommand extends Command
   }  
   
   boolean resolveCollision(Agent actor) {
-    if (world[actor.xPos][actor.yPos] == TileType.RIVER) {
-      println("RIVER");
-//      obj.getClass().equals(MyObject.class)
-      if (actor.getClass().equals(Child.class)) {
-        println("child on river");
-        children.remove(actor);
-        
-        gameOver = true;
-        return true;
-      }
-      if (actor.getClass().equals(Parent.class)) {
-        println("parent on river");
-        parent = null;
-        
-        gameOver = true;
-        return true;
-      }
+    // TODO PUT BACK children will drown
+//    if (world[actor.xPos][actor.yPos] == TileType.RIVER) {
+//      println("RIVER");
+////      obj.getClass().equals(MyObject.class)
+//      if (actor.getClass().equals(Child.class)) {
+//        println("child on river");
+//        children.remove(actor);
+//        
+//        gameOver = true;
+//        return true;
+//      }
+//      if (actor.getClass().equals(Parent.class)) {
+//        println("parent on river");
+//        parent = null;
+//        
+//        gameOver = true;
+//        return true;
+//      }
 //      children.remove(actor); // remove child from world
-      return true;
-    } else if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) {
+    //  return true;
+   // } else 
+    if (!inBounds(actor.xPos, actor.yPos) || world[actor.xPos][actor.yPos] != null) {
       println("rolling back actor");
       rollBackPosition(actor);
       return true;
