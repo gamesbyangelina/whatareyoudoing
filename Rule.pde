@@ -2,6 +2,7 @@ import java.util.*;
 
 class Rule {
 
+  PImage parentImg = loadImage("img/R_Shrubs_Right.png");
   List<Condition> preconditions = new ArrayList<Condition>();
   Action consequence;
   
@@ -92,11 +93,12 @@ class Rule {
   
   public void renderChild(float x, float y)
   {
-    noStroke();
+    image(parentImg,x,y,40,40);
+    /*noStroke();
     fill(color(141, 115, 232));
     rect(x, y, tileSize, tileSize);
     fill(255);
-    ellipse(x + tileSize/2, y + borderSize*4, 2, 2);
+    ellipse(x + tileSize/2, y + borderSize*4, 2, 2);*/
   }
   
 }
