@@ -2,7 +2,7 @@ import java.util.*;
 
 class Rule {
 
-  PImage parentImg = loadImage("img/R_Shrubs_Right.png");
+  PImage parentImg = loadImage("img/R_Shrubs_Back.png");
   List<Condition> preconditions = new ArrayList<Condition>();
   Action consequence;
   
