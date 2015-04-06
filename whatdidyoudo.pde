@@ -189,9 +189,11 @@ void draw()
   int line = 1;
   textFont(createFont("Arial", 14, true));
   fill (textColor);
+  text(childRules.size()+" Learned Rules (Press a number to delete a rule)", xOffset - linewidth/4, 20);//yOffset+
   for (Rule rule : childRules) {
-    rule.draw(xOffset, yOffset+line*linewidth);
-    text(""+line, xOffset - linewidth/4, yOffset+line*linewidth);
+    rule.draw(xOffset, yOffset+(line-1)*linewidth);//yOffset+
+    fill (textColor);
+    text(""+line, xOffset - linewidth/4, yOffset+(line-1)*linewidth);//yOffset+
     //text(text, xOffset, yOffset+line*linewidth);  
     line++;
   }
