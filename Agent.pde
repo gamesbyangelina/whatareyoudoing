@@ -4,7 +4,7 @@ abstract class Agent
   public Facing direction;
   public TileType inventory;
   color renderColor;
-  PImage agentImage;
+  PImage[] agentImages; //ordered by facing directions: [up, down, left, right]
   
   public Agent(int x, int y) {
     xPos = x;
@@ -20,7 +20,14 @@ abstract class Agent
     rect(xPos*tileSize + borderSize*2, yPos*tileSize + borderSize*2, 
           tileSize - borderSize*4, tileSize - borderSize*4);
     //fill(255);
-    image (agentImage, xPos*tileSize, yPos*tileSize, tileSize, tileSize);
+    PImage imageToRender = null;
+    if (direction == Facing.UP) imageToRender = agentImages[0];
+    else if (direction == Facing.DOWN) imageToRender = agentImages[1];
+    else if (direction == Facing.LEFT) imageToRender = agentImages[2];
+    else if (direction == Facing.RIGHT) imageToRender = agentImages[3];
+    
+    if (imageToRender != null)
+      image (imageToRender, xPos*tileSize, yPos*tileSize, tileSize, tileSize);
     
     if (direction == Facing.UP) 
       ellipse(xPos*tileSize + tileSize/2, yPos*tileSize + borderSize*4, 2, 2);
@@ -91,7 +98,12 @@ class Parent extends Agent
   {
     super(x, y);
     renderColor = color(77, 35, 219);
-    agentImage = loadImage("img/R_Shrubs_Right.png");// parentImg;
+    agentImages = new PImage[4];
+    
+    agentImages[0] = loadImage("img/R_Shrubs_Back.png");// parentImg;
+    agentImages[1] = loadImage("img/R_Shrubs_Front.png");
+    agentImages[2] = loadImage("img/R_Shrubs_Left.png");
+    agentImages[3] = loadImage("img/R_Shrubs_Right.png");
   }
 }
 
@@ -122,7 +134,11 @@ class Child extends Agent
     rules = new LinkedList<Rule>();
     learnFrequency = 5;
     isLearning = true;
-    agentImage = loadImage("img/Y_Shrubs_Right.png");  // parentImg;
+    agentImages = new PImage[4];
+    agentImages[0] = loadImage("img/Y_Shrubs_Back.png");
+    agentImages[1] = loadImage("img/Y_Shrubs_Front.png");
+    agentImages[2] = loadImage("img/Y_Shrubs_Left.png");
+    agentImages[3] = loadImage("img/Y_Shrubs_Right.png");  // parentImg;
   }
   
   public Child(int x, int y, int learnFreq)
