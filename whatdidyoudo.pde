@@ -166,11 +166,18 @@ void draw()
   //draw the status bar
   fill(255);
   String holdingString = "Parent is holding: ";
-  holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
+  if(parent.inventory == TileType.STONE) holdingString += "a stone!";
+  else if(parent.inventory == TileType.STRAWBERRY) holdingString += "a strawberry!";
+  else holdingString += "nothing";
+  //holdingString += (parent.inventory != null && parent.inventory == TileType.STONE) ? "a stone!" : "nothing";
+  //holdingString += (parent.inventory != null && parent.inventory == TileType.STRAWBERRY) ? "a stone!" : "nothing";
   text(holdingString, 10, gridSizeY*tileSize + 20);
   for (int i = 0; i < numChildren; i++)
   {
     holdingString = "Child " + str(i+1) + " is holding: ";
+    if(children.get(i).inventory == TileType.STONE) holdingString += "a stone!";
+    else if(children.get(i).inventory == TileType.STRAWBERRY) holdingString += "a strawberry!";
+    else holdingString += "nothing";
     ///holdingString += (children.get(i).inventory != null && children.get(i).inventory == TileType.STONE) ? "a stone!" : "nothing";
     text(holdingString, 10, gridSizeY*tileSize + 50 + i*25);
   }
